@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+            android:id="@+id/RomanCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Roman"
+            />
+
+        <CheckBox
+            android:id="@+id/PoliciercheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Polar et Thriller"
+            android:layout_below="@id/RomanCheckBox"/>
+        <CheckBox
+            android:id="@+id/BDCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BD"
+            android:layout_below="@id/PoliciercheckBox"/>
+        <CheckBox
+            android:id="@+id/HistoireCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Histoire"
+            android:layout_below="@id/BDCheckBox"/>
+
+        <Button
+            android:id="@+id/rechercheThemeButton"
+            android:layout_marginRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recherche"
+            android:layout_below="@id/HistoireCheckBox"
+            android:layout_alignParentRight="true"/>
+
+    <RelativeLayout
+        android:id="@+id/resultatRecherche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@id/rechercheThemeButton"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/title"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detective Conan"/>
+
+        <TextView
+            android:id="@+id/auteur"
+            android:layout_below="@id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gosho Ayoama"/>
+
+        <TextView
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:text="2016"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>
