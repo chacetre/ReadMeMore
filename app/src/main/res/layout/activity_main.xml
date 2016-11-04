@@ -7,74 +7,107 @@
     android:fitsSystemWindows="true"
     tools:context=".Activity.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <include layout="@layout/action_bar"/>
+
+    <include layout="@layout/content_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_marginTop="?attr/actionBarSize" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+    <!-- oui ça casse le rendering de androidstudio, mais c'est un bug avec la version 25 de Gradle. Ça fonctionne
+        correctement une fois déployé sur un telephone -->
+
+    <android.support.v4.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- This LinearLayout represents the contents of the screen  -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </android.support.design.widget.AppBarLayout>
+            <!-- Il faudrait voir si on peut pas mettre ça ailleurs -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="250dp"
+                android:layout_gravity="center_horizontal">
 
-    <include layout="@layout/content_main" />
+                <Button
+                    android:id="@+id/listButton"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="Listes de lecture"
+                    android:background="#81BEF7"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#F2F2F2"
+                    />
+                <Button
+                    android:id="@+id/suggestionButton"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="Suggestions"
+                    android:background="#81BEF7"
+                    android:layout_below="@id/listButton"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#F2F2F2"
+                    />
+                <Button
+                    android:id="@+id/statistiqueButton"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="Statistiques"
+                    android:background="#81BEF7"
+                    android:layout_below="@id/suggestionButton"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#F2F2F2"
+                    />
 
-    <RelativeLayout
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:paddingBottom="16dp"
-     android:paddingLeft="16dp"
-     android:paddingRight="16dp"
-     android:paddingTop="250dp"
-     android:layout_gravity="center_horizontal">
-
-     <Button
-         android:id="@+id/listButton"
-         android:layout_height="wrap_content"
-         android:layout_width="match_parent"
-         android:text="Listes de lecture"
-         android:background="#81BEF7"
-         android:layout_marginBottom="10dp"
-         android:textColor="#F2F2F2"
-         />
-     <Button
-         android:id="@+id/suggestionButton"
-         android:layout_height="wrap_content"
-         android:layout_width="match_parent"
-         android:text="Suggestions"
-         android:background="#81BEF7"
-         android:layout_below="@id/listButton"
-         android:layout_marginBottom="10dp"
-         android:textColor="#F2F2F2"
-         />
-     <Button
-         android:id="@+id/statistiqueButton"
-         android:layout_height="wrap_content"
-         android:layout_width="match_parent"
-         android:text="Statistiques"
-         android:background="#81BEF7"
-         android:layout_below="@id/suggestionButton"
-         android:layout_marginBottom="10dp"
-         android:textColor="#F2F2F2"
-         />
-
-     <Button
-         android:id="@+id/notificationButton"
-         android:layout_height="wrap_content"
-         android:layout_width="match_parent"
-         android:text="Rappels de lecture"
-         android:background="#81BEF7"
-         android:layout_below="@id/statistiqueButton"
-         android:textColor="#F2F2F2"
-         android:layout_gravity="center_horizontal"/>
+                <Button
+                    android:id="@+id/notificationButton"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="Rappels de lecture"
+                    android:background="#81BEF7"
+                    android:layout_below="@id/statistiqueButton"
+                    android:textColor="#F2F2F2"
+                    android:layout_gravity="center_horizontal"/>
 
 
 
- </RelativeLayout>
+            </RelativeLayout>
+
+            <!-- The ActionBar displayed at the top
+            <include
+                layout="@layout/action_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+                -->
+
+            <!-- The main content view where fragments are loaded -->
+            <FrameLayout
+                android:id="@+id/flContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <!-- The navigation drawer that comes from the left -->
+        <!-- Note that `android:layout_gravity` needs to be set to 'start' -->
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nvView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@android:color/white"
+            app:menu="@menu/drawer_view" />
+    </android.support.v4.widget.DrawerLayout>
 
 
 
