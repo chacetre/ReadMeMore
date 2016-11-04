@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.charlotte.readmemore.AdpaterList;
+import com.example.charlotte.readmemore.AdapterList;
 import com.example.charlotte.readmemore.Livre;
 import com.example.charlotte.readmemore.R;
 
@@ -45,7 +45,7 @@ public class ListReadingFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new AdpaterList(bookList);
+        mAdapter = new AdapterList(bookList);
         mRecyclerView.setAdapter(mAdapter);
 
         bookList.clear();

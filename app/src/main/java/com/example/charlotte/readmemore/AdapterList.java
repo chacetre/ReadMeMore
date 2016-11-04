@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Charlotte on 22/10/2016.
  */
-public class AdpaterList extends RecyclerView.Adapter<AdpaterList.MyViewHolder> {
+public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> {
 
     private List<Livre> BookList;
 
@@ -27,7 +27,7 @@ public class AdpaterList extends RecyclerView.Adapter<AdpaterList.MyViewHolder> 
         }
     }
 
-    public AdpaterList(List<Livre> BookList) {
+    public AdapterList(List<Livre> BookList) {
         this.BookList = BookList;
     }
 
