@@ -39,6 +39,7 @@ public class ListGeneralActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.content_list);
         database = FirebaseDatabase.getInstance();
+        database.setPersistenceEnabled(true);
         reference = database.getReference("globalLibrary");
 
         bookList = new ArrayList<>();
