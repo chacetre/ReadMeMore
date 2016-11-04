@@ -18,11 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.ListGeneralActivity"/>
-        <activity android:name=".Activity.StatistiqueActivity"/>
-        <activity android:name=".Activity.SuggestionActivity"/>
-        <activity android:name=".Activity.ResultatSuggestionActivity"/>
-        <activity android:name=".Activity.InfosLivreActivity"/>
+        <activity android:name=".Activity.ListGeneralActivity" />
+        <activity android:name=".Activity.StatistiqueActivity" />
+        <activity android:name=".Activity.SuggestionActivity" />
+        <activity android:name=".Activity.ResultatSuggestionActivity" />
+        <activity android:name=".Activity.InfosLivreActivity" />
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>

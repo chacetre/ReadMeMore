@@ -5,4 +5,7 @@
     <string name="suggestions">Suggestions</string>
     <string name="stats">Statistiques</string>
     <string name="reminders">Rappels de Lecture</string>
+    <!--<string name="default_web_client_id">64242458393-0995e0n3rejf7bvh5mag2q34j19t5vk6.apps.googleusercontent.com</string>-->
+    <string name="signed_in_fmt">Signed in as: %s</string>
+
 </resources>
