@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.charlotte.readmemore.Activity.ListGeneralActivity;
 import com.example.charlotte.readmemore.AdapterList;
 import com.example.charlotte.readmemore.Livre;
 import com.example.charlotte.readmemore.R;
@@ -22,7 +23,6 @@ public class ListReadingFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Livre> bookList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -43,32 +43,14 @@ public class ListReadingFragment extends Fragment {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
+        List<Livre> bookList = filterBook();
         // specify an adapter (see also next example)
         mAdapter = new AdapterList(bookList);
         mRecyclerView.setAdapter(mAdapter);
 
-        bookList.clear();
-        initListBook();
-
         return rootView;
     }
-
-    private void initListBook() { // pour le moment on les met en dur ensuite on ira les chercher dans la BD
-
-        Livre book = new Livre("AAAAAAAAAAAAAA", "J.K. Rowling", "2016");
-        bookList.add(book);
-
-        book = new Livre("BBBBBBBBBBBB", "Fanny Pantigny", "2016");
-        bookList.add(book);
-
-        book = new Livre("CCCCCCCCCCCCC", "Gérard Davet", "2016");
-        bookList.add(book);
-
-        book = new Livre("DDDDDDDDDDDDDd", "François Mitterrand", "2016");
-        bookList.add(book);
-
-        mAdapter.notifyDataSetChanged();
-
+    private List<Livre> filterBook() {
+        return ((ListGeneralActivity) getActivity()).getBookList();
     }
 }
