@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "64242458393",
+    "firebase_url": "https://readmemore-79353.firebaseio.com",
+    "project_id": "readmemore-79353",
+    "storage_bucket": "readmemore-79353.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64242458393:android:088e63f738550f93",
+        "android_client_info": {
+          "package_name": "com.example.charlotte.readmemore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "64242458393-g4m4nhpkm9fv14fjuren7c0tcelt61u7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.charlotte.readmemore",
+            "certificate_hash": "E30E598F251D6B4438508F3DF0057005BCDAD6E6"
+          }
+        },
+        {
+          "client_id": "64242458393-0995e0n3rejf7bvh5mag2q34j19t5vk6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNAnSRGN8UUfZJNbHVMgEJeRwwhLiw93c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "64242458393-0995e0n3rejf7bvh5mag2q34j19t5vk6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
