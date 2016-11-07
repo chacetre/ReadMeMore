@@ -69,6 +69,7 @@ public class ListGeneralActivity extends FragmentActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                bookList=dataSnapshot.getValue(bookList.getClass());
 //                String value = dataSnapshot.getValue(String.class);
 //                Log.d("Firebase", "Value is: " + value);
             }
@@ -80,31 +81,7 @@ public class ListGeneralActivity extends FragmentActivity {
             }
         });
 
-        Livre book = new Livre("AAAAAAAAAAAAAA", "J.K. Rowling", "2016");
-        bookList.add(book);
-
-        book = new Livre("BBBBBBBBBBBB", "Fanny Pantigny", "2016");
-        bookList.add(book);
-
-        book = new Livre("CCCCCCCCCCCCC", "Gérard Davet", "2016");
-        bookList.add(book);
-
-        book = new Livre("DDDDDDDDDDDDDd", "François Mitterrand", "2016");
-        bookList.add(book);
-
-        book = new Livre("Harry Potter et l'Enfant Maudit", "J.K. Rowling", "2016");
-        bookList.add(book);
-
-        book = new Livre("Ki et Hi", "Fanny Pantigny", "2016");
-        bookList.add(book);
-
-        book = new Livre("Un président ne devrait pas dire ça… Les secrets d'un quinquennat", "Gérard Davet", "2016");
-        bookList.add(book);
-
-        book = new Livre("Lettres à Anne 1962-1995", "François Mitterrand", "2016");
-        bookList.add(book);
-
-        reference.setValue(bookList);
+//        reference.setValue(bookList);
     }
 
     public List<Livre> getBookList() {
