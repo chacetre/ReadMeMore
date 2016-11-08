@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
+
 import java.util.List;
 
 /**
@@ -11,7 +13,7 @@ import java.util.List;
  */
 public class SuggestionViewPagerAdapter extends FragmentPagerAdapter {
 
-    private final List<Fragment> fragments;
+    private final List<RecyclerViewFragment> fragments;
     private String tabTitles[] = new String[] {"Automatique", "Par thème" };
 
     //On fournit à l'adapter la liste des fragments à afficher

@@ -19,38 +19,11 @@ import java.util.List;
 /**
  * Created by Charlotte on 24/10/2016.
  */
-public class ListReadingFragment extends Fragment {
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+public class ListReadingFragment extends RecyclerViewFragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        // The last two arguments ensure LayoutParams are inflated
-        // properly.
-        View rootView = inflater.inflate(
-                R.layout.list_book, container, false);
-
-        super.onCreate(savedInstanceState);
-
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this.getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        List<Livre> bookList = filterBook();
-        // specify an adapter (see also next example)
-        mAdapter = new AdapterList(bookList);
-        mRecyclerView.setAdapter(mAdapter);
-
-        return rootView;
-    }
-    private List<Livre> filterBook() {
-        return ((ListGeneralActivity) getActivity()).getBookList();
+    protected List<Livre> filterBook(List<Livre> input) {
+        //TODO Proper filter
+        return input;
     }
 }

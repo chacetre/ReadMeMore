@@ -27,6 +27,10 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> 
         }
     }
 
+    public void UpdateList(List<Livre> bookList) {
+        this.BookList=bookList;
+    }
+
     public AdapterList(List<Livre> BookList) {
         this.BookList = BookList;
     }

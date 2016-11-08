@@ -8,7 +8,10 @@ public class Livre {
     private String auteur;
     private String date;
     //private  String Resume; // avoir si on met le résumé ou non
+    //Besoin pour firebase
+    public Livre() {
 
+    }
     public Livre(String title, String auteur, String date) {
         this.title = title;
         this.auteur = auteur;
