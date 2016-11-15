@@ -32,8 +32,88 @@
         android:layout_centerHorizontal="true"
         android:text="Harry potter - J.K. Rowling - Vous êtes à la pages 500"/>
 
+    <Button
+        android:id="@+id/listButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Listes de lecture"
+        android:background="#81BEF7"
+        android:layout_marginBottom="10dp"
+        android:textColor="#F2F2F2"
+        android:layout_below="@id/infoLectureEnCours"
+        />
+    <Button
+        android:id="@+id/suggestionButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Suggestions"
+        android:background="#81BEF7"
+        android:layout_below="@id/listButton"
+        android:layout_marginBottom="10dp"
+        android:textColor="#F2F2F2"
+        />
+    <Button
+        android:id="@+id/statistiqueButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Statistiques"
+        android:background="#81BEF7"
+        android:layout_below="@id/suggestionButton"
+        android:layout_marginBottom="10dp"
+        android:textColor="#F2F2F2"
+        />
 
+    <Button
+        android:id="@+id/notificationButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Rappels de lecture"
+        android:background="#81BEF7"
+        android:layout_below="@id/statistiqueButton"
+        android:textColor="#F2F2F2"
+        android:layout_gravity="center_horizontal"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notificationButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <Button
+            android:id="@+id/sign_out_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="#81BEF7"
+            android:text="Deconnexion"
+            android:textColor="#F2F2F2"
+            android:visibility="visible"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/sign_in_button"
+            android:layout_alignStart="@+id/sign_in_button" />
+
+        <TextView
+            android:textAlignment="center"
+            android:id="@+id/logged_in_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sign_out_button"
+            android:layout_alignBottom="@+id/sign_out_button"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/sign_in_button"
+            android:layout_toStartOf="@+id/sign_in_button" />
+    </RelativeLayout>
 
 
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_list_lecture"
+            android:title="Listes de Lecture" />
+        <item
+            android:id="@+id/nav_sugestion"
+            android:title="Suggestion" />
+        <item
+            android:id="@+id/nav_statistique"
+            android:title="Statistiques" />
+        <item
+            android:id="@+id/nav_rappel"
+            android:title="Rappel de lecture" />
+    </group>
+</menu>
