@@ -16,9 +16,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.example.charlotte.readmemore.ListFragment.ListReadFragment;
-import com.example.charlotte.readmemore.ListFragment.ListReadingFragment;
-import com.example.charlotte.readmemore.ListFragment.ListToReadFragment;
 import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
 import com.example.charlotte.readmemore.Livre;
 import com.example.charlotte.readmemore.PageView.ViewPagerListAdapter;
@@ -42,6 +39,12 @@ public class ListGeneralActivity extends FragmentActivity {
     private List<Livre> bookList;
     private List<RecyclerViewFragment> fragments;
     private ImageView backHome;
+    private ImageView addBook;
+    public static ViewPager viewPager;
+
+    public static ViewPager getViewPager() {
+        return viewPager;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class ListGeneralActivity extends FragmentActivity {
         database= Utils.getDatabase();
         reference = database.getReference("globalLibrary");
         backHome = (ImageView) findViewById(R.id.backHome) ;
+        addBook = (ImageView) findViewById(R.id.addBook) ;
 
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +63,15 @@ public class ListGeneralActivity extends FragmentActivity {
             }
 
         });
+
+        addBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* ouvrir Pop-up */
+            }
+
+        });
+
         bookList = new ArrayList<>();
 
         // Création de la liste de Fragments que fera défiler le PagerAdapter
@@ -69,7 +82,7 @@ public class ListGeneralActivity extends FragmentActivity {
         fragments.add((RecyclerViewFragment) Fragment.instantiate(this,RecyclerViewFragment.class.getName()));
         fragments.add((RecyclerViewFragment) Fragment.instantiate(this,RecyclerViewFragment.class.getName()));
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new ViewPagerListAdapter(getSupportFragmentManager(),fragments));
 
         // Give the PagerSlidingTabStrip the ViewPager
@@ -79,7 +92,8 @@ public class ListGeneralActivity extends FragmentActivity {
         initListBook();
     }
 
-    private void initListBook () { // pour le moment on les met en dur ensuite on ira les chercher dans la BD
+    private void initListBook () {
+
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,8 +116,8 @@ public class ListGeneralActivity extends FragmentActivity {
                 Log.w("Firebase", "Failed to read value.", error.toException());
             }
         });
-
 //        reference.setValue(bookList);
+
     }
 
     public List<Livre> getBookList() {

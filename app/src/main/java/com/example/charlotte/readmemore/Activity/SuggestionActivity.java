@@ -10,11 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.example.charlotte.readmemore.ListFragment.ListReadFragment;
-import com.example.charlotte.readmemore.ListFragment.ListReadingFragment;
-import com.example.charlotte.readmemore.ListFragment.ListToReadFragment;
 import com.example.charlotte.readmemore.PageView.SuggestionViewPagerAdapter;
-import com.example.charlotte.readmemore.PageView.ViewPagerListAdapter;
 import com.example.charlotte.readmemore.R;
 import com.example.charlotte.readmemore.SuggestionFragment.SuggestionAutoFrag;
 import com.example.charlotte.readmemore.SuggestionFragment.SuggestionByThemeFrag;
