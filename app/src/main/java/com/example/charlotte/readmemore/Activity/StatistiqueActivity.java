@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.charlotte.readmemore.R;
 
@@ -13,9 +14,22 @@ import com.example.charlotte.readmemore.R;
  */
 public class StatistiqueActivity extends AppCompatActivity {
 
+    private ImageView backHome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistique_activity);
+
+        backHome = (ImageView) findViewById(R.id.backHome) ;
+
+        backHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StatistiqueActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+        });
     }
 }

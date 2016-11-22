@@ -1,17 +1,16 @@
 package com.example.charlotte.readmemore.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.example.charlotte.readmemore.ListFragment.ListReadFragment;
-import com.example.charlotte.readmemore.ListFragment.ListReadingFragment;
-import com.example.charlotte.readmemore.ListFragment.ListToReadFragment;
 import com.example.charlotte.readmemore.PageView.SuggestionViewPagerAdapter;
-import com.example.charlotte.readmemore.PageView.ViewPagerListAdapter;
 import com.example.charlotte.readmemore.R;
 import com.example.charlotte.readmemore.SuggestionFragment.SuggestionAutoFrag;
 import com.example.charlotte.readmemore.SuggestionFragment.SuggestionByThemeFrag;
@@ -23,10 +22,22 @@ import java.util.Vector;
  * Created by Charlotte on 23/10/2016.
  */
 public class SuggestionActivity extends AppCompatActivity {
+
+    private ImageView backHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.suggestion_activity);
+        backHome = (ImageView) findViewById(R.id.backHome) ;
+
+        backHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SuggestionActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+        });
 
         List fragments = new Vector();
 
