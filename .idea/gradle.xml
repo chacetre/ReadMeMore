@@ -5,7 +5,6 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <!--Ajouter une variable d'environnement s'appellant GRADLE_HOME, avec pour valeur C:\Program Files\Android\Android Studio\gradle\gradle-2.10 ou le path vers votre Gradle-->
         <option name="gradleHome" value="$GRADLE_HOME$" />
         <option name="modules">
           <set>

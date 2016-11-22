@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -11,11 +12,10 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.example.charlotte.readmemore.ListFragment.ListReadFragment;
-import com.example.charlotte.readmemore.ListFragment.ListReadingFragment;
-import com.example.charlotte.readmemore.ListFragment.ListToReadFragment;
 import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
 import com.example.charlotte.readmemore.Livre;
 import com.example.charlotte.readmemore.PageView.ViewPagerListAdapter;
@@ -38,6 +38,13 @@ public class ListGeneralActivity extends FragmentActivity {
     private static DatabaseReference reference;
     private List<Livre> bookList;
     private List<RecyclerViewFragment> fragments;
+    private ImageView backHome;
+    private ImageView addBook;
+    public static ViewPager viewPager;
+
+    public static ViewPager getViewPager() {
+        return viewPager;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,25 @@ public class ListGeneralActivity extends FragmentActivity {
         super.setContentView(R.layout.content_list);
         database= Utils.getDatabase();
         reference = database.getReference("globalLibrary");
+        backHome = (ImageView) findViewById(R.id.backHome) ;
+        addBook = (ImageView) findViewById(R.id.addBook) ;
+
+        backHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ListGeneralActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
+        addBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* ouvrir Pop-up */
+            }
+
+        });
 
         bookList = new ArrayList<>();
 
@@ -56,7 +82,7 @@ public class ListGeneralActivity extends FragmentActivity {
         fragments.add((RecyclerViewFragment) Fragment.instantiate(this,RecyclerViewFragment.class.getName()));
         fragments.add((RecyclerViewFragment) Fragment.instantiate(this,RecyclerViewFragment.class.getName()));
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new ViewPagerListAdapter(getSupportFragmentManager(),fragments));
 
         // Give the PagerSlidingTabStrip the ViewPager
@@ -66,7 +92,8 @@ public class ListGeneralActivity extends FragmentActivity {
         initListBook();
     }
 
-    private void initListBook () { // pour le moment on les met en dur ensuite on ira les chercher dans la BD
+    private void initListBook () {
+
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -76,7 +103,7 @@ public class ListGeneralActivity extends FragmentActivity {
                 GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
                 bookList=dataSnapshot.getValue(genericTypeIndicator);
                 for (RecyclerViewFragment fragment:
-                     fragments) {
+                        fragments) {
                     fragment.updateBookList(bookList);
                 }
 //                String value = dataSnapshot.getValue(String.class);
@@ -89,8 +116,8 @@ public class ListGeneralActivity extends FragmentActivity {
                 Log.w("Firebase", "Failed to read value.", error.toException());
             }
         });
-
 //        reference.setValue(bookList);
+
     }
 
     public List<Livre> getBookList() {

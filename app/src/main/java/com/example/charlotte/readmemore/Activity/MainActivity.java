@@ -2,17 +2,18 @@ package com.example.charlotte.readmemore.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,14 +36,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener ,NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawer;
-    private Toolbar toolbar;
-    private NavigationView nvDrawer;
-    private ActionBarDrawerToggle drawerToggle;
+    private ImageView btn_navigation_drawer;
     private static int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
+    private Button listButton;
+    private Button statistiqueButton;
+    private TextView infoLectureEnCours;
+    private Button suggestionButton;
 
+
+    //
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private SignInButton mSignInButton;
@@ -53,22 +58,32 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Set a Toolbar to replace the ActionBar.
-        toolbar = (Toolbar) findViewById(R.id.actionBar);
-        setSupportActionBar(toolbar);
 
-        // Find our drawer view
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        btn_navigation_drawer = (ImageView) findViewById(R.id.btn_navigation_drawer);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        Button listButton = (Button) findViewById(R.id.listButton);
-        Button statistiqueButton = (Button) findViewById(R.id.statistiqueButton);
-        Button suggestionButton = (Button) findViewById(R.id.suggestionButton);
-        TextView textView = (TextView) findViewById(R.id.infoLectureEnCours);
+        listButton = (Button) findViewById(R.id.listButton);
+        statistiqueButton = (Button) findViewById(R.id.statistiqueButton);
+        suggestionButton = (Button) findViewById(R.id.suggestionButton);
+        infoLectureEnCours = (TextView) findViewById(R.id.infoLectureEnCours);
 
-        textView.setOnClickListener(new View.OnClickListener() {
+
+
+        infoLectureEnCours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,InfosLivreActivity.class);
+                Intent intent = new Intent(MainActivity.this, InfosLivreActivity.class);
                 startActivity(intent);
             }
 
@@ -77,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,ListGeneralActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListGeneralActivity.class);
                 startActivity(intent);
             }
 
@@ -86,20 +101,72 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         statistiqueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,StatistiqueActivity.class);
-                startActivity(intent);            }
+                Intent intent = new Intent(MainActivity.this, StatistiqueActivity.class);
+                startActivity(intent);
+            }
 
         });
+
         suggestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,SuggestionActivity.class);
-                startActivity(intent);            }
+                Intent intent = new Intent(MainActivity.this, SuggestionActivity.class);
+                startActivity(intent);
+            }
 
         });
         setConnection();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_list_lecture) {
+            Intent intent = new Intent(MainActivity.this, ListGeneralActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_sugestion) {
+            Intent intent = new Intent(MainActivity.this, SuggestionActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_statistique) {
+            Intent intent = new Intent(MainActivity.this, StatistiqueActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_rappel) {
+
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+
+    //Connection a la data Base
     private void setConnection() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -219,25 +286,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         }
                     }
                 });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawer.openDrawer(GravityCompat.START);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
