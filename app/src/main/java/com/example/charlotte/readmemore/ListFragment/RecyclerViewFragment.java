@@ -74,7 +74,7 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mAdapter = new AdapterList(bookList);
         mAdapter.notifyDataSetChanged();
-        //updateBookList(listManually()); Juste pour Charlotte car pas connection a la dataBase
+        updateBookList(listManually()); // Juste pour Charlotte car pas connection a la dataBase
         return rootView;
     }
 

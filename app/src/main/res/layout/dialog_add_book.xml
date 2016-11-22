@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <EditText
+        android:id="@+id/titre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        />
+
+    <EditText
+        android:id="@+id/auteur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@id/titre"
+        />
+
+    <TextView
+        android:id="@+id/ET_text_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textSize="16dp"
+        android:layout_below="@id/auteur"/>
+
+    <EditText
+        android:id="@+id/ET_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@id/ET_text_information"
+        android:visibility="gone"
+        />
+
+    <EditText
+        android:id="@+id/ET_pages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@id/ET_date"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/dialogButtonRecherche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ajouter"
+        android:layout_below="@+id/auteur"
+        android:layout_alignRight="@+id/titre"
+        android:layout_alignEnd="@+id/titre"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/dialogButtonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ajouter"
+        android:layout_below="@+id/ET_pages"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"/>
+
+
+
+</RelativeLayout>
