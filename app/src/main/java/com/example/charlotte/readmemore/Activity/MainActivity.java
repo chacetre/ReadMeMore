@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private Button statistiqueButton;
     private TextView infoLectureEnCours;
     private Button suggestionButton;
+    private Button notificationButton;
 
 
     //
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         listButton = (Button) findViewById(R.id.listButton);
         statistiqueButton = (Button) findViewById(R.id.statistiqueButton);
         suggestionButton = (Button) findViewById(R.id.suggestionButton);
+        notificationButton = (Button) findViewById(R.id.notificationButton);
         infoLectureEnCours = (TextView) findViewById(R.id.infoLectureEnCours);
 
 
@@ -111,6 +113,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SuggestionActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
+       notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
             }
 

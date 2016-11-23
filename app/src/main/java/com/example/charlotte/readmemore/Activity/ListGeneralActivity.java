@@ -53,10 +53,10 @@ public class ListGeneralActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.content_list);
-        database= Utils.getDatabase();
+        database = Utils.getDatabase();
         reference = database.getReference("globalLibrary");
-        backHome = (ImageView) findViewById(R.id.backHome) ;
-        addBook = (ImageView) findViewById(R.id.addBook) ;
+        backHome = (ImageView) findViewById(R.id.backHome);
+        addBook = (ImageView) findViewById(R.id.addBook);
 
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +71,7 @@ public class ListGeneralActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
 
-                final boolean find = false ;
+                final boolean find = false;
                 final Dialog dialog = new Dialog(view.getContext());
                 dialog.setContentView(R.layout.dialog_add_book);
                 dialog.setTitle("Ajouter un livre");
@@ -108,6 +108,7 @@ public class ListGeneralActivity extends FragmentActivity {
                         //Sinon on demande d'ajouter dans la DB
 
                         text.setText("Nous n'avons pas trouver de livre dans notre bibilotèque veuillez renseigner les champs suivants :");
+                        text.setTextColor(getResources().getColor(R.color.red));
                         date.setVisibility(View.VISIBLE);
                         nbPages.setVisibility(View.VISIBLE);
                         dialogButton.setVisibility(View.GONE);
@@ -137,12 +138,12 @@ public class ListGeneralActivity extends FragmentActivity {
 
         fragments = new Vector<>();
         // Ajout des Fragments dans la liste
-        fragments.add((RecyclerViewFragment) Fragment.instantiate(this,RecyclerViewFragment.class.getName()));
-        fragments.add((RecyclerViewFragment) Fragment.instantiate(this,RecyclerViewFragment.class.getName()));
-        fragments.add((RecyclerViewFragment) Fragment.instantiate(this,RecyclerViewFragment.class.getName()));
+        fragments.add((RecyclerViewFragment) Fragment.instantiate(this, RecyclerViewFragment.class.getName()));
+        fragments.add((RecyclerViewFragment) Fragment.instantiate(this, RecyclerViewFragment.class.getName()));
+        fragments.add((RecyclerViewFragment) Fragment.instantiate(this, RecyclerViewFragment.class.getName()));
 
         viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new ViewPagerListAdapter(getSupportFragmentManager(),fragments));
+        viewPager.setAdapter(new ViewPagerListAdapter(getSupportFragmentManager(), fragments));
 
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
@@ -151,7 +152,7 @@ public class ListGeneralActivity extends FragmentActivity {
         initListBook();
     }
 
-    private void initListBook () {
+    private void initListBook() {
 
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -159,9 +160,10 @@ public class ListGeneralActivity extends FragmentActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
-                bookList=dataSnapshot.getValue(genericTypeIndicator);
-                for (RecyclerViewFragment fragment:
+                GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {
+                };
+                bookList = dataSnapshot.getValue(genericTypeIndicator);
+                for (RecyclerViewFragment fragment :
                         fragments) {
                     fragment.updateBookList(bookList);
                 }
