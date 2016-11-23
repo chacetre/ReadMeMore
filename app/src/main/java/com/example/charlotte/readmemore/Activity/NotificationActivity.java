@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +56,9 @@ public class NotificationActivity extends AppCompatActivity {
         pendingIntent = PendingIntent.getBroadcast(NotificationActivity.this, 0, myIntent,0);
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_DAY,
+                AlarmManager.INTERVAL_DAY,pendingIntent);
     }
 
     public void start() {

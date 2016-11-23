@@ -13,8 +13,7 @@ import java.util.List;
  */
 public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> {
 
-    private List<Livre> bookList;
-
+    private ListLivres bookList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title,auteur,year;
@@ -27,7 +26,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> 
         }
     }
 
-    public AdapterList(List<Livre> bookList) {
+    public AdapterList(ListLivres bookList) {
         this.bookList = bookList;
     }
 

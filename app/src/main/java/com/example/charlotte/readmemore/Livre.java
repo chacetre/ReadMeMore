@@ -1,19 +1,22 @@
 package com.example.charlotte.readmemore;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Charlotte on 23/10/2016.
  */
-public class Livre {
+public class Livre implements Parcelable {
     private String title;
     private String auteur;
     private String date;
-    private int nbPages;
+    private String nbPages;
     private String status;  // 1 = déja lu , 2 = en cours , 3 = à lire
-    private int pageEnCours;
+    private String pageEnCours;
     //private  String Resume; // avoir si on met le résumé ou non
     //Besoin pour firebase
 
-    public Livre(String title, String auteur, String date, int nbPages, String status, int pageEnCours) {
+    public Livre(String title, String auteur, String date, String nbPages, String status, String pageEnCours) {
         this.title = title;
         this.auteur = auteur;
         this.date = date;
@@ -22,11 +25,11 @@ public class Livre {
         this.pageEnCours = pageEnCours;
     }
 
-    public int getNbPages() {
+    public String getNbPages() {
         return nbPages;
     }
 
-    public void setNbPages(int nbPages) {
+    public void setNbPages(String nbPages) {
         this.nbPages = nbPages;
     }
 
@@ -38,11 +41,11 @@ public class Livre {
         this.status = status;
     }
 
-    public int getPageEnCours() {
+    public String getPageEnCours() {
         return pageEnCours;
     }
 
-    public void setPageEnCours(int pageEnCours) {
+    public void setPageEnCours(String pageEnCours) {
         this.pageEnCours = pageEnCours;
     }
 
@@ -71,5 +74,53 @@ public class Livre {
 
     public String getDate() {
         return date;
+    }
+
+    public Livre(Parcel in)
+    {
+        this.getFromParcel(in);
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
+    {
+        public Livre createFromParcel(Parcel in)
+        {
+            return new Livre(in);
+        }
+
+        @Override
+        public Object[] newArray(int size) {
+            return null;
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    //On ecrit dans le parcel les données de notre objet
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeString(this.title);
+        dest.writeString(this.auteur);
+        dest.writeString(this.date);
+        dest.writeString(this.nbPages);
+        dest.writeString(this.status);
+        dest.writeString(this.pageEnCours);
+    }
+
+    //On va ici hydrater notre objet à partir du Parcel
+    public void getFromParcel(Parcel in)
+    {
+        this.setTitle(in.readString());
+        this.setAuteur(in.readString());
+        this.setDate(in.readString());
+        this.setNbPages(in.readString());
+        this.setStatus(in.readString());
+        this.setPageEnCours(in.readString());
+
     }
 }
