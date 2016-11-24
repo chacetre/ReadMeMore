@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
+import com.example.charlotte.readmemore.Livre;
 import com.example.charlotte.readmemore.R;
+import com.example.charlotte.readmemore.Utils;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -35,21 +39,33 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener ,NavigationView.OnNavigationItemSelectedListener {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout mDrawer;
     private ImageView btn_navigation_drawer;
     private static int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
     private Button listButton;
     private Button statistiqueButton;
+    private Button winButton;
     private TextView infoLectureEnCours;
     private Button suggestionButton;
+    private Button notificationButton;
 
-
-    //
+    // Pour la DB
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference userRef;
+    private ValueEventListener valueEventListener;
+
     private SignInButton mSignInButton;
     private TextView mStatusTextView;
     private Button mSignOutButton;
@@ -76,9 +92,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         listButton = (Button) findViewById(R.id.listButton);
         statistiqueButton = (Button) findViewById(R.id.statistiqueButton);
         suggestionButton = (Button) findViewById(R.id.suggestionButton);
+        notificationButton = (Button) findViewById(R.id.notificationButton);
+        winButton = (Button) findViewById(R.id.winButton);
         infoLectureEnCours = (TextView) findViewById(R.id.infoLectureEnCours);
-
-
 
         infoLectureEnCours.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +131,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
 
         });
+
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
+        winButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, WinActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
         setConnection();
     }
 
@@ -168,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     //Connection a la data Base
     private void setConnection() {
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -185,15 +221,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // User is signed in
-//                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    mStatusTextView.setText(getString(R.string.signed_in_fmt, user.getDisplayName()));
+                    updateUI(true);
                 } else {
-                    // User is signed out
-//                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    updateUI(false);
                 }
             }
         };
-
+        mAuth.addAuthStateListener(mAuthListener);
         mStatusTextView = (TextView) findViewById(R.id.logged_in_feedback);
         mSignOutButton = (Button) findViewById(R.id.sign_out_button);
         mSignOutButton.setOnClickListener(new View.OnClickListener() {
@@ -207,7 +242,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 // ...
                             }
                         });
-                updateUI(false);
             }
         });
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
@@ -220,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 signIn();
             }
         });
-        updateUI(false);
     }
 
     private void signIn() {
@@ -241,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     private void updateUI(boolean isSigned) {
-        if(isSigned) {
+        if (isSigned) {
             mStatusTextView.setVisibility(View.VISIBLE);
             mSignOutButton.setVisibility(View.VISIBLE);
             mSignInButton.setVisibility(View.INVISIBLE);
@@ -257,12 +290,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             firebaseAuthWithGoogle(acct);
-            updateUI(true);
         } else {
-            // Signed out, show unauthenticated UI.
-            updateUI(false);
+            // Signed out, show unauthenticated UI
         }
     }
 

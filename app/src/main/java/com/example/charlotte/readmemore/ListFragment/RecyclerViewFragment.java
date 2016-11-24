@@ -79,7 +79,8 @@ public class RecyclerViewFragment extends Fragment {
     public void updateBookList(List<Livre> livres) {
         if (this.isVisible()) {
             bookList.clear();
-            bookList.addAll(filterBook(livres));
+            //bookList.addAll(filterBook(livres));
+            bookList.addAll(livres);
             Log.i("BookList", " has been updated");
 //            mAdapter.UpdateList(bookList);
             mAdapter.notifyDataSetChanged();

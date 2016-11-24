@@ -31,6 +31,6 @@ public class ListReadFragment extends RecyclerViewFragment {
     @Override
     protected List<Livre> filterBook(List<Livre> input) {
         //TODO Proper filter
-        return input;
+        return super.filterBook(input);
     }
 }

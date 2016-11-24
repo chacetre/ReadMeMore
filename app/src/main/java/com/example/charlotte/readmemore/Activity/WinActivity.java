@@ -3,21 +3,14 @@ package com.example.charlotte.readmemore.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
-import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
 import com.example.charlotte.readmemore.Livre;
-import com.example.charlotte.readmemore.PageView.SuggestionViewPagerAdapter;
 import com.example.charlotte.readmemore.R;
-import com.example.charlotte.readmemore.SuggestionFragment.SuggestionAutoFrag;
-import com.example.charlotte.readmemore.SuggestionFragment.SuggestionByThemeFrag;
 import com.example.charlotte.readmemore.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,14 +21,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
- * Created by Charlotte on 23/10/2016.
+ * Created by Charlotte on 23/11/2016.
  */
-public class SuggestionActivity extends AppCompatActivity {
+
+public class WinActivity extends AppCompatActivity {
 
     private ImageView backHome;
+    private int nb;
     private List<Livre> userLivres;
     private List<Livre> globalLivres;
     private static ValueEventListener valueEventListener;
@@ -45,33 +39,24 @@ public class SuggestionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.suggestion_activity);
+        setContentView(R.layout.win_activity);
+
         backHome = (ImageView) findViewById(R.id.backHome) ;
+        TextView nbPage = (TextView) findViewById(R.id.totalPoint);
 
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SuggestionActivity.this, MainActivity.class);
+                Intent intent = new Intent(WinActivity.this, MainActivity.class);
                 startActivity(intent);
             }
 
         });
-        setUserDBListener();
-        List fragments = new Vector();
+        nb=0;
+        nbPage.setText(String.valueOf(nb) + " points");
 
-        // Ajout des Fragments dans la liste
-        fragments.add(Fragment.instantiate(this,SuggestionAutoFrag.class.getName()));
-        fragments.add(Fragment.instantiate(this,SuggestionByThemeFrag.class.getName()));
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pagerSuggestion);
-        viewPager.setAdapter(new SuggestionViewPagerAdapter(getSupportFragmentManager(),fragments));
-
-        // Give the PagerSlidingTabStrip the ViewPager
-        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabsSuggestion);
-        // Attach the view pager to the tab strip
-        tabsStrip.setViewPager(viewPager);
+        // TODO boucle if
         setUserDBListener();
     }
 
@@ -82,7 +67,7 @@ public class SuggestionActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() == null) {
-                    if(userRef == null) {
+                    if(userRef!=null) {
                         if(valueEventListener!=null) {
                             userRef.removeEventListener(valueEventListener);
                         }
@@ -105,6 +90,8 @@ public class SuggestionActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
                             userLivres=dataSnapshot.getValue(genericTypeIndicator);
+                            //TODO Set good NB ?
+                            nb=userLivres.size();
                         }
 
                         @Override

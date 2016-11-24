@@ -67,9 +67,20 @@
         android:id="@+id/notificationButton"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
         android:text="Rappels de lecture"
         android:background="#81BEF7"
         android:layout_below="@id/statistiqueButton"
+        android:textColor="#F2F2F2"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/winButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Gains"
+        android:background="#81BEF7"
+        android:layout_below="@id/notificationButton"
         android:textColor="#F2F2F2"
         android:layout_gravity="center_horizontal"/>
 
