@@ -16,11 +16,17 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
+
 import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
+import com.example.charlotte.readmemore.ListFragment.ListReadFragment;
+import com.example.charlotte.readmemore.ListFragment.ListReadingFragment;
+import com.example.charlotte.readmemore.ListFragment.ListToReadFragment;
+
 import com.example.charlotte.readmemore.Livre;
 import com.example.charlotte.readmemore.PageView.ViewPagerListAdapter;
 import com.example.charlotte.readmemore.R;
 import com.example.charlotte.readmemore.Utils;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -78,9 +84,9 @@ public class ListGeneralActivity extends FragmentActivity {
 
         fragments = new Vector<>();
         // Ajout des Fragments dans la liste
-        fragments.add((RecyclerViewFragment) Fragment.instantiate(this,RecyclerViewFragment.class.getName()));
-        fragments.add((RecyclerViewFragment) Fragment.instantiate(this,RecyclerViewFragment.class.getName()));
-        fragments.add((RecyclerViewFragment) Fragment.instantiate(this,RecyclerViewFragment.class.getName()));
+        fragments.add((ListReadFragment) Fragment.instantiate(this,ListReadFragment.class.getName()));
+        fragments.add((ListReadingFragment) Fragment.instantiate(this,ListReadingFragment.class.getName()));
+        fragments.add((ListToReadFragment) Fragment.instantiate(this,ListToReadFragment.class.getName()));
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new ViewPagerListAdapter(getSupportFragmentManager(),fragments));

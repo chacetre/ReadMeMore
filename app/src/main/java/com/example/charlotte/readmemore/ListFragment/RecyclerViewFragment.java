@@ -3,7 +3,6 @@ package com.example.charlotte.readmemore.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,17 +30,13 @@ public class RecyclerViewFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Livre> bookList;
     private List<Livre> hold;
-    private List<Livre> listFilter;
-    private List<Livre> localChacha;
     private boolean toUpdate = false;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         bookList = new ArrayList<>();
-        listFilter = new ArrayList<>();
         mAdapter = new AdapterList(bookList);
-
     }
 
     @Override
@@ -72,30 +67,13 @@ public class RecyclerViewFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter = new AdapterList(bookList);
         mAdapter.notifyDataSetChanged();
-        //updateBookList(listManually()); Juste pour Charlotte car pas connection a la dataBase
         return rootView;
     }
 
     protected List<Livre> filterBook(List<Livre> input) {
-
-        listFilter.clear();
-        int currentItem = ListGeneralActivity.getViewPager().getCurrentItem() ;
-        String currentItemS = "";
-        if(currentItem == 0)
-            currentItemS = "1";
-        if(currentItem == 1)
-            currentItemS = "2";
-        if(currentItem == 2)
-            currentItemS = "3";
-
-        for (Livre l : input)
-        {
-            if(l.getStatus().equals(currentItemS))
-                listFilter.add(l);
-        }
-        return listFilter;
+        //TODO Proper filter
+        return input;
     }
 
     public void updateBookList(List<Livre> livres) {
@@ -109,26 +87,5 @@ public class RecyclerViewFragment extends Fragment {
             hold = livres;
             toUpdate = true;
         }
-    }
-
-    public List<Livre> listManually(){
-        localChacha = new ArrayList<>();
-        localChacha.clear();
-        Livre l = new Livre("Anna et Elsa","Georges","2016",202,"1",152);
-        localChacha.add(l);
-
-        l = new Livre("Bob l'éponge","Marie","2016",202,"2",152);
-        localChacha.add(l);
-
-        l = new Livre("Gasper le fantome","Lise","2016",202,"3",152);
-        localChacha.add(l);
-
-        l = new Livre("mamie le chien","marion","2016",202,"2",152);
-        localChacha.add(l);
-
-        l = new Livre("Leo le veau","lea","2016",202,"1",152);
-        localChacha.add(l);
-
-        return localChacha;
     }
 }

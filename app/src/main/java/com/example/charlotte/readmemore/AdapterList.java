@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> {
 
-    private List<Livre> bookList;
+    private List<Livre> BookList;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -27,8 +27,12 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> 
         }
     }
 
-    public AdapterList(List<Livre> bookList) {
-        this.bookList = bookList;
+    public void UpdateList(List<Livre> bookList) {
+        this.BookList=bookList;
+    }
+
+    public AdapterList(List<Livre> BookList) {
+        this.BookList = BookList;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Livre book = bookList.get(position);
+        Livre book = BookList.get(position);
         holder.title.setText(book.getTitle());
         holder.auteur.setText(book.getAuteur());
         holder.year.setText(book.getDate());
@@ -49,7 +53,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return bookList.size();
+        return BookList.size();
     }
 
 }
