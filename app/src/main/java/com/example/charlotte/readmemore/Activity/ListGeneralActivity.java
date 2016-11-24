@@ -59,8 +59,8 @@ public class ListGeneralActivity extends FragmentActivity {
 
         database = Utils.getDatabase();
         reference = database.getReference("globalLibrary");
-        backHome = (ImageView) findViewById(R.id.backHome);
-        addBook = (ImageView) findViewById(R.id.addBook);
+        backHome = (ImageView) findViewById(R.id.backHome) ;
+        addBook = (ImageView) findViewById(R.id.addBook) ;
 
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,11 +74,21 @@ public class ListGeneralActivity extends FragmentActivity {
         addBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /* ouvrir Pop-up */
+            }
 
-                final boolean find = false;
-                final Dialog dialog = new Dialog(view.getContext());
-                dialog.setContentView(R.layout.dialog_add_book);
-                dialog.setTitle("Ajouter un livre");
+        });
+
+        bookList = new ArrayList<>();
+
+        });
+
+        fragments = new Vector<>();
+        // Ajout des Fragments dans la liste
+        fragments.add((ListReadFragment) Fragment.instantiate(this,ListReadFragment.class.getName()));
+        fragments.add((ListReadingFragment) Fragment.instantiate(this,ListReadingFragment.class.getName()));
+        fragments.add((ListToReadFragment) Fragment.instantiate(this,ListToReadFragment.class.getName()));
+
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new ViewPagerListAdapter(getSupportFragmentManager(),fragments));
 
@@ -88,53 +98,8 @@ public class ListGeneralActivity extends FragmentActivity {
                 final EditText date = (EditText) dialog.findViewById(R.id.ET_date);
                 final TextView text = (TextView) dialog.findViewById(R.id.ET_text_information);
 
-                final Button dialogButtonAdd = (Button) dialog.findViewById(R.id.dialogButtonAdd);
     private void initListBook () {
 
-
-
-                /* On recupere data des EDIT TEXT */
-
-                String titreS = titre.getText().toString();
-                String auteurS = auteur.getText().toString();
-                String nbPagesS = nbPages.getText().toString();
-                String dateS = date.getText().toString();
-
-
-                final Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonRecherche);
-                // if button is clicked, close the custom dialog
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        String titreS = titre.getText().toString();
-                        String auteurS = auteur.getText().toString();
-                        // TODO : Faire une recherche dans la dataBase avec auteurS et titre S
-                        // si on trouve alors on ferme et on ajoute dans la liste de lecture
-
-                        //Sinon on demande d'ajouter dans la DB
-
-                        text.setText("Nous n'avons pas trouver de livre dans notre bibilotèque veuillez renseigner les champs suivants :");
-                        text.setTextColor(getResources().getColor(R.color.red));
-                        date.setVisibility(View.VISIBLE);
-                        nbPages.setVisibility(View.VISIBLE);
-                        dialogButton.setVisibility(View.GONE);
-                        dialogButtonAdd.setVisibility(View.VISIBLE);
-
-                    }
-                });
-
-                dialogButtonAdd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String dateS = date.getText().toString();
-                        String nbPageS = nbPages.getText().toString();
-                        // envoie de la donnée a la DB et ajout à la liste
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
