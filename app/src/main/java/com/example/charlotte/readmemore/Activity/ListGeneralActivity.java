@@ -15,11 +15,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.example.charlotte.readmemore.ListLivres;
+
+import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
+import com.example.charlotte.readmemore.ListFragment.ListReadFragment;
+import com.example.charlotte.readmemore.ListFragment.ListReadingFragment;
+import com.example.charlotte.readmemore.ListFragment.ListToReadFragment;
+
 import com.example.charlotte.readmemore.Livre;
 import com.example.charlotte.readmemore.PageView.ListViewPagerAdapter;
 import com.example.charlotte.readmemore.R;
 import com.example.charlotte.readmemore.Utils;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,8 +39,8 @@ public class ListGeneralActivity extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
     private FirebaseDatabase database;
     private static DatabaseReference reference;
-    private ListLivres bookList;
-    // private List<RecyclerViewFragment> fragments;
+    private List<Livre> bookList;
+    private List<RecyclerViewFragment> fragments;
     private ImageView backHome;
     private ImageView addBook;
     public static ViewPager viewPager;
@@ -71,6 +79,8 @@ public class ListGeneralActivity extends FragmentActivity {
                 final Dialog dialog = new Dialog(view.getContext());
                 dialog.setContentView(R.layout.dialog_add_book);
                 dialog.setTitle("Ajouter un livre");
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(new ViewPagerListAdapter(getSupportFragmentManager(),fragments));
 
                 final EditText titre = (EditText) dialog.findViewById(R.id.titre);
                 final EditText auteur = (EditText) dialog.findViewById(R.id.auteur);
@@ -79,6 +89,7 @@ public class ListGeneralActivity extends FragmentActivity {
                 final TextView text = (TextView) dialog.findViewById(R.id.ET_text_information);
 
                 final Button dialogButtonAdd = (Button) dialog.findViewById(R.id.dialogButtonAdd);
+    private void initListBook () {
 
 
 
@@ -124,19 +135,25 @@ public class ListGeneralActivity extends FragmentActivity {
                 });
 
                 dialog.show();
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
+                bookList=dataSnapshot.getValue(genericTypeIndicator);
+                for (RecyclerViewFragment fragment:
+                        fragments) {
+                    fragment.updateBookList(bookList);
+                }
+//                String value = dataSnapshot.getValue(String.class);
+//                Log.d("Firebase", "Value is: " + value);
             }
 
         });
+//        reference.setValue(bookList);
 
-
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new ListViewPagerAdapter(getSupportFragmentManager(), bookList));
-
-        // Give the PagerSlidingTabStrip the ViewPager
-        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        // Attach the view pager to the tab strip
-        tabsStrip.setViewPager(viewPager);
-        //initListBook();
     }
 
 

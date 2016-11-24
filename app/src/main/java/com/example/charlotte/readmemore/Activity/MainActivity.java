@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ListGeneralActivity.class);
-                intent.putExtra("identifiantListe", (Parcelable) listLivres);
                 startActivity(intent);
             }
 
@@ -151,55 +150,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setConnection();
     }
 
-    public ListLivres recupererLivres() {
-        // Grace a la dataBase
-
-        /* reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {
-                };
-                bookList = dataSnapshot.getValue(genericTypeIndicator);
-                for (RecyclerViewFragment fragment :
-                        fragments) {
-                    fragment.updateBookList(bookList);
-                }
-//                String value = dataSnapshot.getValue(String.class);
-//                Log.d("Firebase", "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Firebase", "Failed to read value.", error.toException());
-            }
-        });
-//        reference.setValue(bookList);
-
-    */
-
-        ListLivres list = new ListLivres();
-        Livre l = new Livre("Anna et Elsa", "Georges", "2016", "202", "1", "152");
-        list.add(l);
-
-        l = new Livre("Bob l'éponge", "Marie", "2016", "202", "2", "152");
-        list.add(l);
-
-        l = new Livre("Gasper le fantome", "Lise", "2016", "202", "3", "152");
-        list.add(l);
-
-        l = new Livre("mamie le chien", "marion", "2016", "202", "2", "152");
-        list.add(l);
-
-        l = new Livre("Leo le veau", "lea", "2016", "202", "1", "152");
-        list.add(l);
-        return list;
-    }
-
-
-    /*Navigation DRAWER */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -374,4 +324,52 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+    public ListLivres recupererLivres() {
+        // Grace a la dataBase
+
+        /* reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {
+                };
+                bookList = dataSnapshot.getValue(genericTypeIndicator);
+                for (RecyclerViewFragment fragment :
+                        fragments) {
+                    fragment.updateBookList(bookList);
+                }
+//                String value = dataSnapshot.getValue(String.class);
+//                Log.d("Firebase", "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Firebase", "Failed to read value.", error.toException());
+            }
+        });
+//        reference.setValue(bookList);
+
+    */
+
+        ListLivres list = new ListLivres();
+        Livre l = new Livre("Anna et Elsa", "Georges", "2016", "202", "1", "152");
+        list.add(l);
+
+        l = new Livre("Bob l'éponge", "Marie", "2016", "202", "2", "152");
+        list.add(l);
+
+        l = new Livre("Gasper le fantome", "Lise", "2016", "202", "3", "152");
+        list.add(l);
+
+        l = new Livre("mamie le chien", "marion", "2016", "202", "2", "152");
+        list.add(l);
+
+        l = new Livre("Leo le veau", "lea", "2016", "202", "1", "152");
+        list.add(l);
+        return list;
+    }
+
 }
