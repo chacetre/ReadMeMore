@@ -6,13 +6,14 @@ import android.os.Parcelable;
 /**
  * Created by Charlotte on 23/10/2016.
  */
-public class Livre implements Parcelable {
+//public class Livre implements Parcelable {
+public class Livre {
     private String title;
     private String auteur;
     private String date;
-    private String nbPages;
-    private String status;  // 1 = déja lu , 2 = en cours , 3 = à lire
-    private String pageEnCours;
+    //private String nbPages;
+    //private String status;  // 1 = déja lu , 2 = en cours , 3 = à lire
+    //private String pageEnCours;
     //private  String Resume; // avoir si on met le résumé ou non
     //Besoin pour firebase
 
@@ -20,10 +21,11 @@ public class Livre implements Parcelable {
         this.title = title;
         this.auteur = auteur;
         this.date = date;
-        this.nbPages = nbPages;
+/*        this.nbPages = nbPages;
         this.status = status;
-        this.pageEnCours = pageEnCours;
+        this.pageEnCours = pageEnCours;*/
     }
+/*
 
     public String getNbPages() {
         return nbPages;
@@ -48,6 +50,7 @@ public class Livre implements Parcelable {
     public void setPageEnCours(String pageEnCours) {
         this.pageEnCours = pageEnCours;
     }
+*/
 
     public Livre() {
     }
@@ -75,6 +78,7 @@ public class Livre implements Parcelable {
     public String getDate() {
         return date;
     }
+/*
 
     public Livre(Parcel in)
     {
@@ -123,4 +127,5 @@ public class Livre implements Parcelable {
         this.setPageEnCours(in.readString());
 
     }
+*/
 }

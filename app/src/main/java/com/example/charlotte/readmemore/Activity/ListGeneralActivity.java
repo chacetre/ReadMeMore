@@ -1,13 +1,18 @@
 package com.example.charlotte.readmemore.Activity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,13 +20,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.example.charlotte.readmemore.ListLivres;
+
+import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
+import com.example.charlotte.readmemore.ListFragment.ListReadFragment;
+import com.example.charlotte.readmemore.ListFragment.ListReadingFragment;
+import com.example.charlotte.readmemore.ListFragment.ListToReadFragment;
+
 import com.example.charlotte.readmemore.Livre;
-import com.example.charlotte.readmemore.PageView.ListViewPagerAdapter;
+import com.example.charlotte.readmemore.PageView.ViewPagerListAdapter;
 import com.example.charlotte.readmemore.R;
 import com.example.charlotte.readmemore.Utils;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Charlotte on 21/10/2016.
@@ -30,12 +46,13 @@ public class ListGeneralActivity extends FragmentActivity {
 
     private PagerAdapter mPagerAdapter;
     private FirebaseDatabase database;
-    private static DatabaseReference reference;
-    private ListLivres bookList;
-    // private List<RecyclerViewFragment> fragments;
+    private static DatabaseReference userRef;
+    private List<Livre> bookList;
+    private List<RecyclerViewFragment> fragments;
     private ImageView backHome;
     private ImageView addBook;
     public static ViewPager viewPager;
+    private static ValueEventListener valueEventListener;
 
     public static ViewPager getViewPager() {
         return viewPager;
@@ -45,14 +62,11 @@ public class ListGeneralActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.content_list);
-
-        Bundle b = getIntent().getExtras();
-        bookList = b.getParcelable("identifiantListe");
-
-        database = Utils.getDatabase();
-        reference = database.getReference("globalLibrary");
-        backHome = (ImageView) findViewById(R.id.backHome);
-        addBook = (ImageView) findViewById(R.id.addBook);
+        database= Utils.getDatabase();
+        //Connect and sync db on user change;
+        setUserDBListener();
+        backHome = (ImageView) findViewById(R.id.backHome) ;
+        addBook = (ImageView) findViewById(R.id.addBook) ;
 
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,17 +142,60 @@ public class ListGeneralActivity extends FragmentActivity {
 
         });
 
+        bookList = new ArrayList<>();
+
+        // Création de la liste de Fragments que fera défiler le PagerAdapter
+
+        fragments = new Vector<>();
+        // Ajout des Fragments dans la liste
+        fragments.add((ListReadFragment) Fragment.instantiate(this,ListReadFragment.class.getName()));
+        fragments.add((ListReadingFragment) Fragment.instantiate(this,ListReadingFragment.class.getName()));
+        fragments.add((ListToReadFragment) Fragment.instantiate(this,ListToReadFragment.class.getName()));
 
         viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new ListViewPagerAdapter(getSupportFragmentManager(), bookList));
+        viewPager.setAdapter(new ViewPagerListAdapter(getSupportFragmentManager(),fragments));
 
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
-        //initListBook();
+        setUserDBListener();
     }
 
+    private void setUserDBListener() {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() == null) {
+                    if(userRef!=null) {
+                        userRef.removeEventListener(valueEventListener);
+                        userRef = null;
+                    }
+                    bookList.clear();
+                }
+                else {
+                    userRef =database.getReference(firebaseAuth.getCurrentUser().getUid());
+                    valueEventListener = userRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
+                            bookList=dataSnapshot.getValue(genericTypeIndicator);
+                            for (RecyclerViewFragment fragment:
+                                    fragments) {
+                                fragment.updateBookList(bookList);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            Log.w("Firebase", "Failed to read value.", error.toException());
+                        }
+                    });
+                }
+            }
+        });
+    }
 
     public List<Livre> getBookList() {
         return bookList;
