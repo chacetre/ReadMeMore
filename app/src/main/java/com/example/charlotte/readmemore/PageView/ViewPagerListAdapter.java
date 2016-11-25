@@ -1,23 +1,24 @@
 package com.example.charlotte.readmemore.PageView;
 
+import java.util.List;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
 
-import java.util.List;
 
 /**
  * Created by Charlotte on 24/10/2016.
  */
-public class SuggestionViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerListAdapter extends FragmentPagerAdapter {
 
     private final List<RecyclerViewFragment> fragments;
-    private String tabTitles[] = new String[] {"Automatique", "Par thème" };
+    private String tabTitles[] = new String[] {"A lire", "En lecture", "Déja lu" };
 
     //On fournit à l'adapter la liste des fragments à afficher
-    public SuggestionViewPagerAdapter(FragmentManager fm, List fragments) {
+    public ViewPagerListAdapter(FragmentManager fm, List fragments) {
         super(fm);
         this.fragments = fragments;
     }

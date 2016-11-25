@@ -52,9 +52,9 @@ public class ListLivres extends ArrayList<Livre> implements Parcelable {
             dest.writeString(pers.getTitle());
             dest.writeString(pers.getAuteur());
             dest.writeString(pers.getDate());
-            dest.writeString(pers.getNbPages());
-            dest.writeString(pers.getStatus());
-            dest.writeString(pers.getPageEnCours());
+            //dest.writeString(pers.getNbPages());
+            //dest.writeString(pers.getStatus());
+            //dest.writeString(pers.getPageEnCours());
         }
     }
 
@@ -73,9 +73,9 @@ public class ListLivres extends ArrayList<Livre> implements Parcelable {
             livre.setTitle(in.readString());
             livre.setAuteur(in.readString());
             livre.setDate(in.readString());
-            livre.setNbPages(in.readString());
-            livre.setStatus(in.readString());
-            livre.setPageEnCours(in.readString());
+            //livre.setNbPages(in.readString());
+            //livre.setStatus(in.readString());
+            //livre.setPageEnCours(in.readString());
             this.add(livre);
         }
 
