@@ -1,13 +1,11 @@
 package com.example.charlotte.readmemore.Activity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
@@ -31,12 +29,8 @@ import com.example.charlotte.readmemore.PageView.ViewPagerListAdapter;
 import com.example.charlotte.readmemore.R;
 import com.example.charlotte.readmemore.Utils;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 /**
@@ -44,15 +38,35 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class ListGeneralActivity extends FragmentActivity {
 
+    private static ValueEventListener userListener;
+    private ValueEventListener globalListener;
+
     private PagerAdapter mPagerAdapter;
-    private FirebaseDatabase database;
-    private static DatabaseReference userRef;
-    private List<Livre> bookList;
     private List<RecyclerViewFragment> fragments;
+
     private ImageView backHome;
     private ImageView addBook;
+
+    private List<Livre> bookList;
     public static ViewPager viewPager;
-    private static ValueEventListener valueEventListener;
+
+    private ValueEventListener setUserListener(ValueEventListener valueEventListener) {
+        if(userListener!=null) {
+            Utils.removeUserListener(userListener);
+            userListener=null;
+        }
+        userListener=valueEventListener;
+        return userListener;
+    }
+
+    private ValueEventListener setGlobalListener(ValueEventListener valueEventListener) {
+        if(globalListener!=null) {
+            Utils.removeUserListener(globalListener);
+            globalListener=null;
+        }
+        globalListener=valueEventListener;
+        return globalListener;
+    }
 
     public static ViewPager getViewPager() {
         return viewPager;
@@ -62,9 +76,7 @@ public class ListGeneralActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.content_list);
-        database= Utils.getDatabase();
         //Connect and sync db on user change;
-        setUserDBListener();
         backHome = (ImageView) findViewById(R.id.backHome) ;
         addBook = (ImageView) findViewById(R.id.addBook) ;
 
@@ -142,8 +154,6 @@ public class ListGeneralActivity extends FragmentActivity {
 
         });
 
-        bookList = new ArrayList<>();
-
         // Création de la liste de Fragments que fera défiler le PagerAdapter
 
         fragments = new Vector<>();
@@ -159,45 +169,37 @@ public class ListGeneralActivity extends FragmentActivity {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
-        setUserDBListener();
-    }
 
-    private void setUserDBListener() {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+        Utils.AddUserValueListener(setUserListener(new ValueEventListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null) {
-                    if(userRef!=null) {
-                        userRef.removeEventListener(valueEventListener);
-                        userRef = null;
-                    }
-                    bookList.clear();
-                }
-                else {
-                    userRef =database.getReference(firebaseAuth.getCurrentUser().getUid());
-                    valueEventListener = userRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
-                            bookList=dataSnapshot.getValue(genericTypeIndicator);
-                            for (RecyclerViewFragment fragment:
-                                    fragments) {
-                                fragment.updateBookList(bookList);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            Log.w("Firebase", "Failed to read value.", error.toException());
-                        }
-                    });
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                bookList=Utils.getUserLivres();
+                for (RecyclerViewFragment fragment:
+                        fragments) {
+                    fragment.updateBookList(bookList);
                 }
             }
-        });
-    }
 
-    public List<Livre> getBookList() {
-        return bookList;
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("Firebase", "Failed to read value.", error.toException());
+            }
+        }));
+
+        Utils.AddGlobalValueListener(setGlobalListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                bookList=Utils.getUserLivres();
+                for (RecyclerViewFragment fragment:
+                        fragments) {
+                    fragment.updateBookList(bookList);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("Firebase", "Failed to read value.", error.toException());
+            }
+        }));
     }
 }
