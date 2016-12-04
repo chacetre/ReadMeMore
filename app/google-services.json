@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "64242458393-4kiqq941ca9vkmtic929g3kvdcogtorn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.charlotte.readmemore",
+            "certificate_hash": "A6FD9CD7065588B72189955687354BCEF6FACEC8"
+          }
+        },
+        {
           "client_id": "64242458393-a5gmtic0r61b7ein10oqh95ls83otb8s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
