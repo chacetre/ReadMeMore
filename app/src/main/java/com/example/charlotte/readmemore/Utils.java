@@ -66,11 +66,11 @@ public class Utils {
         return userRef;
     }
 
-    private void AddBookForUser(Livre input) {
+    private static void AddBookForUser(Livre input) {
         userRef.child(String.valueOf(input.hashCode())).setValue(input);
     }
 
-    private void RemoveBookForUser (Livre input) {
+    private static void RemoveBookForUser (Livre input) {
         userRef.child(String.valueOf(input.hashCode())).removeValue();
     }
 
