@@ -128,4 +128,9 @@ public class Livre {
 
     }
 */
+
+    @Override
+    public int hashCode() {
+        return auteur.hashCode()+title.hashCode();
+    }
 }
