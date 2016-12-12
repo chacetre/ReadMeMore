@@ -36,6 +36,7 @@ public class WinActivity extends AppCompatActivity {
     private static ValueEventListener valueEventListener2;
     private static DatabaseReference userRef;
     private static DatabaseReference globalRef;
+    private TextView nbPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class WinActivity extends AppCompatActivity {
         setContentView(R.layout.win_activity);
 
         backHome = (ImageView) findViewById(R.id.backHome) ;
-        TextView nbPage = (TextView) findViewById(R.id.totalPoint);
+        nbPage = (TextView) findViewById(R.id.totalPoint);
 
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,11 +54,12 @@ public class WinActivity extends AppCompatActivity {
             }
 
         });
+        setUserDBListener();
         nb=0;
-        nbPage.setText(String.valueOf(nb) + " points");
+       // nbPage.setText(String.valueOf(nb) + " points");
 
         // TODO boucle if
-        setUserDBListener();
+
     }
 
     private void setUserDBListener() {
@@ -92,6 +94,7 @@ public class WinActivity extends AppCompatActivity {
                             userLivres=dataSnapshot.getValue(genericTypeIndicator);
                             //TODO Set good NB ?
                             nb=userLivres.size();
+                            nbPage.setText(String.valueOf(nb) + " points");
                         }
 
                         @Override

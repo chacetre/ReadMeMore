@@ -48,7 +48,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawer;
     private ImageView btn_navigation_drawer;
     private static int RC_SIGN_IN = 9001;
