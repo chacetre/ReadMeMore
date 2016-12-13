@@ -189,11 +189,7 @@ public class ListGeneralActivity extends FragmentActivity {
         Utils.AddGlobalValueListener(setGlobalListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                bookList=Utils.getUserLivres();
-                for (RecyclerViewFragment fragment:
-                        fragments) {
-                    fragment.updateBookList(bookList);
-                }
+
             }
 
             @Override
