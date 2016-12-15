@@ -31,9 +31,9 @@ public class WinActivity extends AppCompatActivity {
     private ImageView backHome;
     private int nb;
     private List<Livre> userLivres;
-    private List<Livre> globalLivres;
+    private TextView nbPage ;
     private static ValueEventListener userListener;
-    private static ValueEventListener globalListener;
+
 
     private ValueEventListener setUserListener(ValueEventListener valueEventListener) {
         if(userListener!=null) {
@@ -44,14 +44,7 @@ public class WinActivity extends AppCompatActivity {
         return userListener;
     }
 
-    private ValueEventListener setGlobalListener(ValueEventListener valueEventListener) {
-        if(globalListener!=null) {
-            Utils.removeUserListener(globalListener);
-            globalListener=null;
-        }
-        globalListener=valueEventListener;
-        return globalListener;
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +52,7 @@ public class WinActivity extends AppCompatActivity {
         setContentView(R.layout.win_activity);
 
         backHome = (ImageView) findViewById(R.id.backHome) ;
-        TextView nbPage = (TextView) findViewById(R.id.totalPoint);
+        nbPage = (TextView) findViewById(R.id.totalPoint);
 
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +70,13 @@ public class WinActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userLivres=Utils.getUserLivres();
+                /*for ( Livre l : userLivres ) {
+                    if(l.getSatus().equal("finish"))
+                        
+                        nb += l.getNombrePages();
+
+                }*/
+                nbPage.setText(String.valueOf(nb) + " points");
             }
 
             @Override
@@ -85,16 +85,6 @@ public class WinActivity extends AppCompatActivity {
             }
         }));
 
-        Utils.AddGlobalValueListener(setGlobalListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                globalLivres=Utils.getGlobalLivres();
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w("Firebase", "Failed to read value.", error.toException());
-            }
-        }));
     }
 }
