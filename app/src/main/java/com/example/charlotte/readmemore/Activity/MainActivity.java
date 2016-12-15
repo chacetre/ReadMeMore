@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     // Pour la DB
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference userRef;
-    private ValueEventListener valueEventListener;
 
     private SignInButton mSignInButton;
     private TextView mStatusTextView;

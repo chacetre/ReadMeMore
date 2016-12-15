@@ -32,11 +32,26 @@ public class WinActivity extends AppCompatActivity {
     private int nb;
     private List<Livre> userLivres;
     private List<Livre> globalLivres;
-    private static ValueEventListener valueEventListener;
-    private static ValueEventListener valueEventListener2;
-    private static DatabaseReference userRef;
-    private static DatabaseReference globalRef;
-    private TextView nbPage;
+    private static ValueEventListener userListener;
+    private static ValueEventListener globalListener;
+
+    private ValueEventListener setUserListener(ValueEventListener valueEventListener) {
+        if(userListener!=null) {
+            Utils.removeUserListener(userListener);
+            userListener=null;
+        }
+        userListener=valueEventListener;
+        return userListener;
+    }
+
+    private ValueEventListener setGlobalListener(ValueEventListener valueEventListener) {
+        if(globalListener!=null) {
+            Utils.removeUserListener(globalListener);
+            globalListener=null;
+        }
+        globalListener=valueEventListener;
+        return globalListener;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +59,7 @@ public class WinActivity extends AppCompatActivity {
         setContentView(R.layout.win_activity);
 
         backHome = (ImageView) findViewById(R.id.backHome) ;
-        nbPage = (TextView) findViewById(R.id.totalPoint);
+        TextView nbPage = (TextView) findViewById(R.id.totalPoint);
 
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,69 +69,32 @@ public class WinActivity extends AppCompatActivity {
             }
 
         });
-        setUserDBListener();
         nb=0;
-       // nbPage.setText(String.valueOf(nb) + " points");
+        nbPage.setText(String.valueOf(nb) + " points");
 
         // TODO boucle if
-
-    }
-
-    private void setUserDBListener() {
-        userLivres = new ArrayList<>();
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+        Utils.AddUserValueListener(setUserListener(new ValueEventListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null) {
-                    if(userRef!=null) {
-                        if(valueEventListener!=null) {
-                            userRef.removeEventListener(valueEventListener);
-                        }
-                        userRef = null;
-                    }
-                    if(globalRef == null) {
-                        if(valueEventListener2!=null) {
-                            globalRef.removeEventListener(valueEventListener2);
-                        }
-                        globalRef = null;
-                    }
-                    userLivres.clear();
-                    //Clear pas globalLib pour economiser
-                }
-                else {
-                    userRef = Utils.getDatabase().getReference(firebaseAuth.getCurrentUser().getUid());
-                    globalRef = Utils.getDatabase().getReference("globalLibrary");
-                    valueEventListener = userRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
-                            userLivres=dataSnapshot.getValue(genericTypeIndicator);
-                            //TODO Set good NB ?
-                            nb=userLivres.size();
-                            nbPage.setText(String.valueOf(nb) + " points");
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            Log.w("Firebase", "Failed to read value.", error.toException());
-                        }
-                    });
-                    valueEventListener2 = globalRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
-                            globalLivres=dataSnapshot.getValue(genericTypeIndicator);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            Log.w("Firebase", "Failed to read value.", error.toException());
-                        }
-                    });
-                }
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userLivres=Utils.getUserLivres();
             }
-        });
 
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("Firebase", "Failed to read value.", error.toException());
+            }
+        }));
+
+        Utils.AddGlobalValueListener(setGlobalListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                globalLivres=Utils.getGlobalLivres();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("Firebase", "Failed to read value.", error.toException());
+            }
+        }));
     }
 }
