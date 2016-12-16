@@ -1,5 +1,6 @@
 package com.example.charlotte.readmemore.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
 import com.example.charlotte.readmemore.Livre;
+import com.example.charlotte.readmemore.Notifications.MyAlarmService;
 import com.example.charlotte.readmemore.R;
 import com.example.charlotte.readmemore.Utils;
 import com.google.android.gms.auth.api.Auth;
@@ -48,7 +50,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawer;
     private ImageView btn_navigation_drawer;
     private static int RC_SIGN_IN = 9001;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private TextView infoLectureEnCours;
     private Button suggestionButton;
     private Button notificationButton;
+    private int compteur = 0;
 
     // Pour la DB
     private FirebaseAuth mAuth;
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private SignInButton mSignInButton;
     private TextView mStatusTextView;
     private Button mSignOutButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +155,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         });
 
         setConnection();
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -199,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 
     //Connection a la data Base
