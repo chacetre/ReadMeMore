@@ -1,6 +1,7 @@
 package com.example.charlotte.readmemore.ListFragment;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +25,17 @@ public class ListToReadFragment extends RecyclerViewFragment {
 
     @Override
     protected List<Livre> filterBook(List<Livre> input) {
-        //TODO Proper filter
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            input.removeIf(livre -> livre.getReadingStatus() != Livre.Status.ToDo);
+        }
+        else{
+            for (Livre livre: input
+                 ) {
+                if(livre.getReadingStatus()!= Livre.Status.ToDo) {
+                    input.remove(livre);
+                }
+            }
+        }
         return super.filterBook(input);
     }
     

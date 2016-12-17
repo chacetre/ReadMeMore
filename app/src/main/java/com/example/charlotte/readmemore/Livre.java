@@ -3,54 +3,34 @@ package com.example.charlotte.readmemore;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Map;
+
 /**
  * Created by Charlotte on 23/10/2016.
  */
+
 //public class Livre implements Parcelable {
 public class Livre {
+    public enum  Status {
+        OnGoing,
+        ToDo,
+        Done
+    }
+    private static Comparator<Livre> livreComparator;
     private String title;
     private String auteur;
     private String date;
-    //private String nbPages;
-    //private String status;  // 1 = déja lu , 2 = en cours , 3 = à lire
-    //private String pageEnCours;
-    //private  String Resume; // avoir si on met le résumé ou non
-    //Besoin pour firebase
+    private String nbPages;
+    private String nbPagesLues;
+    private Date finDeLecture;
+    private Status readingStatus;
 
-    public Livre(String title, String auteur, String date, String nbPages, String status, String pageEnCours) {
+/*    public Livre(String title, String auteur) {
         this.title = title;
         this.auteur = auteur;
-        this.date = date;
-/*        this.nbPages = nbPages;
-        this.status = status;
-        this.pageEnCours = pageEnCours;*/
-    }
-/*
-
-    public String getNbPages() {
-        return nbPages;
-    }
-
-    public void setNbPages(String nbPages) {
-        this.nbPages = nbPages;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getPageEnCours() {
-        return pageEnCours;
-    }
-
-    public void setPageEnCours(String pageEnCours) {
-        this.pageEnCours = pageEnCours;
-    }
-*/
+    }*/
 
     public Livre() {
     }
@@ -63,74 +43,58 @@ public class Livre {
         this.title = name;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public String getAuteur() {
         return auteur;
     }
-
+    @SuppressWarnings("WeakerAccess")
     public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
-
+    @SuppressWarnings("WeakerAccess")
     public void setDate(String date) {
         this.date = date;
     }
-
+    @SuppressWarnings("WeakerAccess")
     public String getDate() {
         return date;
     }
-/*
-
-    public Livre(Parcel in)
-    {
-        this.getFromParcel(in);
-    }
-
-    @SuppressWarnings("rawtypes")
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
-    {
-        public Livre createFromParcel(Parcel in)
-        {
-            return new Livre(in);
-        }
-
-        @Override
-        public Object[] newArray(int size) {
-            return null;
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    //On ecrit dans le parcel les données de notre objet
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeString(this.title);
-        dest.writeString(this.auteur);
-        dest.writeString(this.date);
-        dest.writeString(this.nbPages);
-        dest.writeString(this.status);
-        dest.writeString(this.pageEnCours);
-    }
-
-    //On va ici hydrater notre objet à partir du Parcel
-    public void getFromParcel(Parcel in)
-    {
-        this.setTitle(in.readString());
-        this.setAuteur(in.readString());
-        this.setDate(in.readString());
-        this.setNbPages(in.readString());
-        this.setStatus(in.readString());
-        this.setPageEnCours(in.readString());
-
-    }
-*/
 
     @Override
     public int hashCode() {
         return auteur.hashCode()+title.hashCode();
     }
+
+    public Status getReadingStatus() {
+        return readingStatus;
+    }
+
+    public void setReadingStatus(Status readingStatus) {
+        this.readingStatus = readingStatus;
+    }
+
+    public Date getFinDeLecture() {
+        return finDeLecture;
+    }
+
+    public void setFinDeLecture(Date finDeLecture) {
+        this.finDeLecture = finDeLecture;
+    }
+
+    public String getNbPagesLues() {
+        return nbPagesLues;
+    }
+
+    public void setNbPagesLues(String nbPagesLues) {
+        this.nbPagesLues = nbPagesLues;
+    }
+
+    public String getNbPages() {
+        return nbPages;
+    }
+
+    public void setNbPages(String nbPages) {
+        this.nbPages = nbPages;
+    }
+
 }
