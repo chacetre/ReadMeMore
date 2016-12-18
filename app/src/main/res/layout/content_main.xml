@@ -10,7 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activity.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:background="@drawable/background">
 
     <TextView
         android:textSize="16dp"
@@ -37,9 +38,10 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="Listes de lecture"
-        android:background="#81BEF7"
-        android:layout_marginBottom="10dp"
+        android:background="#000000"
+        android:alpha="0.75"
         android:textColor="#F2F2F2"
+        android:layout_marginBottom="10dp"
         android:layout_below="@id/infoLectureEnCours"
         />
     <Button
@@ -47,7 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="Suggestions"
-        android:background="#81BEF7"
+        android:background="#000000"
+        android:alpha="0.75"
         android:layout_below="@id/listButton"
         android:layout_marginBottom="10dp"
         android:textColor="#F2F2F2"
@@ -57,7 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="Statistiques"
-        android:background="#81BEF7"
+        android:background="#000000"
+        android:alpha="0.75"
         android:layout_below="@id/suggestionButton"
         android:layout_marginBottom="10dp"
         android:textColor="#F2F2F2"
@@ -69,7 +73,8 @@
         android:layout_width="match_parent"
         android:layout_marginBottom="10dp"
         android:text="Rappels de lecture"
-        android:background="#81BEF7"
+        android:background="#000000"
+        android:alpha="0.75"
         android:layout_below="@id/statistiqueButton"
         android:textColor="#F2F2F2"
         android:layout_gravity="center_horizontal"/>
@@ -79,7 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="Gains"
-        android:background="#81BEF7"
+        android:background="#000000"
+        android:alpha="0.75"
         android:layout_below="@id/notificationButton"
         android:textColor="#F2F2F2"
         android:layout_gravity="center_horizontal"/>
@@ -105,7 +111,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="#81BEF7"
+            android:background="#000000"
+            android:alpha="0.75"
             android:text="Deconnexion"
             android:textColor="#F2F2F2"
             android:visibility="visible"
