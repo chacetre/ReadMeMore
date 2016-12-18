@@ -72,7 +72,7 @@ public class WinActivity extends AppCompatActivity {
                 userLivres=Utils.getUserLivres();
                 /*for ( Livre l : userLivres ) {
                     if(l.getSatus().equal("finish"))
-                        
+
                         nb += l.getNombrePages();
 
                 }*/

@@ -81,8 +81,9 @@ public class Utils {
         return globalRef;
     }
 
-    private static void AddBookForUser(Livre input) {
-        getUserRef().child(String.valueOf(input.hashCode())).setValue(input);
+    public static void AddBookForUser(Livre input) {
+        //getUserRef().child(String.valueOf(input.hashCode())).setValue(input);
+        getUserRef().push().setValue(input);
     }
 
     private static void RemoveBookForUser (Livre input) {

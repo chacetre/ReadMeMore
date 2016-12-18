@@ -1,5 +1,6 @@
 package com.example.charlotte.readmemore.Activity;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -144,7 +145,8 @@ public class ListGeneralActivity extends FragmentActivity {
                     public void onClick(View v) {
                         String dateS = date.getText().toString();
                         String nbPageS = nbPages.getText().toString();
-                        // envoie de la donnée a la DB et ajout à la liste
+                        Livre l = new Livre("George et la grenouille","moi","20-12-2016","500","250", "20-12-2016", "ToDo");
+                        Utils.AddBookForUser(l);
                         dialog.dismiss();
                     }
                 });
