@@ -47,6 +47,7 @@ public class ListGeneralActivity extends FragmentActivity {
     private ImageView backHome;
     private ImageView addBook;
 
+
     private Map<String, Livre> bookList;
     public static ViewPager viewPager;
 

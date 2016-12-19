@@ -3,31 +3,21 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <CheckBox
-            android:id="@+id/RomanCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Roman"
-            />
 
         <CheckBox
             android:id="@+id/PoliciercheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Polar et Thriller"
-            android:layout_below="@id/RomanCheckBox"/>
+            android:text="Policier"
+            android:paddingTop="16dp"
+            />
         <CheckBox
-            android:id="@+id/BDCheckBox"
+            android:id="@+id/RomanceCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BD"
+            android:text="Romance"
             android:layout_below="@id/PoliciercheckBox"/>
-        <CheckBox
-            android:id="@+id/HistoireCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Histoire"
-            android:layout_below="@id/BDCheckBox"/>
+
 
         <Button
             android:id="@+id/rechercheThemeButton"
@@ -35,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Recherche"
-            android:layout_below="@id/HistoireCheckBox"
+            android:layout_below="@id/RomanceCheckBox"
             android:layout_alignParentRight="true"/>
 
     <RelativeLayout
