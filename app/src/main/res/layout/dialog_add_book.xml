@@ -3,20 +3,37 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
+    <TextView
+        android:id="@+id/txt_titre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Titre"
+        android:layout_margin="16dp"/>
+
     <EditText
         android:id="@+id/titre"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:layout_toRightOf="@id/txt_titre"
         />
+
+    <TextView
+        android:id="@+id/txt_auteur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Auteur"
+        android:layout_below="@id/txt_titre"
+        android:layout_margin="16dp"/>
 
     <EditText
         android:id="@+id/auteur"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_below="@id/titre"
+        android:layout_toRightOf="@id/txt_auteur"
         />
 
     <TextView
@@ -27,6 +44,15 @@
         android:textSize="16dp"
         android:layout_below="@id/auteur"/>
 
+    <TextView
+        android:id="@+id/txt_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date de parution"
+        android:layout_below="@id/ET_text_information"
+        android:layout_margin="16dp"
+        android:visibility="gone"/>
+
     <EditText
         android:id="@+id/ET_date"
         android:layout_width="match_parent"
@@ -34,8 +60,18 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_below="@id/ET_text_information"
+        android:layout_toRightOf="@id/txt_date"
         android:visibility="gone"
         />
+
+    <TextView
+        android:id="@+id/txt_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombres de pages"
+        android:layout_below="@id/txt_date"
+        android:layout_margin="16dp"
+        android:visibility="gone"/>
 
     <EditText
         android:id="@+id/ET_pages"
@@ -44,6 +80,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_below="@id/ET_date"
+        android:layout_toRightOf="@id/txt_page"
         android:visibility="gone"
         />
 

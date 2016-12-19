@@ -33,16 +33,13 @@ public class MyReceiver extends BroadcastReceiver {
 
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context.getApplicationContext())
                     .setWhen(System.currentTimeMillis())
-                    .setContentText("Je suis la dame notif")
-                    .setContentTitle("Dis le a chacha")
-                    .setSmallIcon(R.drawable.ic_arrow_back_white_24dp)
+                    .setContentText("N'oubliez pas de lire aujourd'hui !")
+                    .setContentTitle("ReadMeMore")
+                    .setSmallIcon(R.drawable.ic_access_alarm_white_24dp)
                     .setAutoCancel(true);
 
-
             Notification notification = notificationBuilder.build();
-
             NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
             mNotifyMgr.notify(001, notification);
 
 

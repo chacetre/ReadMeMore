@@ -12,7 +12,9 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -20,7 +22,7 @@ import java.util.Stack;
  */
 
 public class Utils {
-    private static List<Livre> userLivres;
+    private static Map<String, Livre> userLivres;
     private static List<Livre> globalLivres;
 
     private static FirebaseDatabase mDatabase;
@@ -45,16 +47,16 @@ public class Utils {
         return globalLivresListeners;
     }
 
-    public static List<Livre> getUserLivres() {
+    public static Map<String, Livre> getUserLivres() {
         if (userLivres == null) {
-            userLivres = new ArrayList<>();
+            userLivres = new HashMap<>();
         }
         return userLivres;
     }
 
     public static List<Livre> getGlobalLivres() {
         if (globalLivres == null) {
-            globalLivres = new ArrayList<>();
+        globalLivres = new ArrayList<>();
         }
         return globalLivres;
     }
@@ -100,7 +102,7 @@ public class Utils {
     }
 
     public static void setUserDBListener() {
-        userLivres = new ArrayList<>();
+        userLivres = new HashMap<>();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
@@ -127,7 +129,8 @@ public class Utils {
                 getUserLivresListeners().push(userRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
+                        //GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
+                        GenericTypeIndicator<Map<String,Livre>> genericTypeIndicator = new GenericTypeIndicator<Map<String,Livre>>() {};
                         userLivres=dataSnapshot.getValue(genericTypeIndicator);
                     }
 
@@ -140,6 +143,7 @@ public class Utils {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         GenericTypeIndicator<List<Livre>> genericTypeIndicator = new GenericTypeIndicator<List<Livre>>() {};
+                        //GenericTypeIndicator<Map<String,Livre>> genericTypeIndicator = new GenericTypeIndicator<Map<String,Livre>>() {};
                         globalLivres=dataSnapshot.getValue(genericTypeIndicator);
                     }
 

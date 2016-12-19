@@ -2,32 +2,26 @@ package com.example.charlotte.readmemore.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
 import com.example.charlotte.readmemore.Livre;
 import com.example.charlotte.readmemore.PageView.SuggestionViewPagerAdapter;
 import com.example.charlotte.readmemore.R;
 import com.example.charlotte.readmemore.SuggestionFragment.SuggestionAutoFrag;
 import com.example.charlotte.readmemore.SuggestionFragment.SuggestionByThemeFrag;
 import com.example.charlotte.readmemore.Utils;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -37,7 +31,7 @@ public class SuggestionActivity extends AppCompatActivity {
 
     private ImageView backHome;
 
-    private List<Livre> userLivres;
+    private Map<String, Livre> userLivres;
     private List<Livre> globalLivres;
 
     private static ValueEventListener userListener;

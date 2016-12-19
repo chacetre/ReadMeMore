@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
     private String HeureAlarme = "00";
     private String minutes = "00";
     private String morning = "AM";
+    private ImageView backHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,17 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
             }
 
         });
+
+        backHome = (ImageView) findViewById(R.id.backHome) ;
+
+        backHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NotificationActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+        });
     }
 
     @Override
@@ -95,12 +108,14 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
 
         MyAlarmService.setHeureAlarme(HeureAlarme + ":" + minutes + ":00");
         MyAlarmService.setMorning(morning);
+        Toast.makeText(this,"Notification active",Toast.LENGTH_SHORT).show();
 
     }
 
     public void stopNotification() {
 
         stopService(new Intent(this,MyAlarmService.class));
+        Toast.makeText(this,"Notification desactive",Toast.LENGTH_SHORT).show();
 
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
 public class SuggestionViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<RecyclerViewFragment> fragments;
-    private String tabTitles[] = new String[] {"Automatique", "Par thème" };
+    private String tabTitles[] = new String[] {"Automatique", "Par theme" };
 
     //On fournit à l'adapter la liste des fragments à afficher
     public SuggestionViewPagerAdapter(FragmentManager fm, List fragments) {

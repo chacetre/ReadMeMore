@@ -2,15 +2,13 @@ package com.example.charlotte.readmemore.Activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.CatmullRomInterpolator;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
@@ -29,6 +27,7 @@ import java.text.Format;
 import java.text.ParsePosition;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Charlotte on 23/10/2016.
@@ -38,10 +37,12 @@ public class StatistiqueActivity extends AppCompatActivity {
     private ImageView backHome;
     private XYPlot plot;
 
-    private List<Livre> userLivres;
+    private Map<String, Livre> userLivres;
     private List<Livre> globalLivres;
     private static ValueEventListener userListener;
     private static ValueEventListener globalListener;
+    Number[] series1Numbers  = {0,0,0,0,0,0,0,0,0,0,0,0};
+    private TextView nombrePage ;
 
 
     private ValueEventListener setUserListener(ValueEventListener valueEventListener) {
@@ -60,7 +61,7 @@ public class StatistiqueActivity extends AppCompatActivity {
 
         plot = (XYPlot) findViewById(R.id.plot);
         backHome = (ImageView) findViewById(R.id.backHome) ;
-
+        nombrePage = (TextView) findViewById(R.id.nombrePageLues) ;
 
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +76,30 @@ public class StatistiqueActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userLivres=Utils.getUserLivres();
+                int nombrePageLus = 0 ;
+                for ( Livre l : userLivres.values() ) {
+                    if(l.getReadingStatus().equals("Done"))
+                    {
+                        String date[] = l.getFinDeLecture().split("-");
+
+                        for (int i =1; i < 13 ;i++)
+                            if(Integer.parseInt(date[1]) == i)
+                            {
+                                int num = Integer.parseInt(series1Numbers[i-1].toString())+1;
+                                series1Numbers[i-1] =  num ;
+                            }
+
+                        nombrePageLus += Integer.parseInt(l.getNbPagesLues());
+                    }
+                    if(l.getReadingStatus().equals("OnGoing"))
+                    {
+                        nombrePageLus += Integer.parseInt(l.getNbPagesLues());
+                    }
+
+                }
+                initPlot();
+                nombrePage.setText(String.valueOf(nombrePageLus));
+
             }
 
             @Override
@@ -83,7 +108,6 @@ public class StatistiqueActivity extends AppCompatActivity {
             }
         }));
 
-        initPlot();
 
     }
 
@@ -92,26 +116,17 @@ public class StatistiqueActivity extends AppCompatActivity {
     public void initPlot(){
 
         final String[] domainLabels = {"janvier", "fevrier", "mars", "avril", "mai", "juin","juillet","aout","septembre","octobre","novembre","decembre"};
-        Number[] series1Numbers = {1, 10 , 50 ,30 ,15, 12,12,12,12,12,12,12 };
-
-
         XYSeries series1 = new SimpleXYSeries(
                 Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series1");
 
 
-        // create formatters to use for drawing a series using LineAndPointRenderer
-        // and configure them from xml:
         LineAndPointFormatter series1Format =
                 new LineAndPointFormatter(Color.RED, Color.GREEN, Color.BLUE, null);
 
-
-        // just for fun, add some smoothing to the lines:
-        // see: http://androidplot.com/smooth-curves-and-androidplot/
         series1Format.setInterpolationParams(
                 new CatmullRomInterpolator.Params(12, CatmullRomInterpolator.Type.Centripetal));
 
 
-        // add a new series' to the xyplot:
         plot.addSeries(series1, series1Format);
 
 
@@ -127,4 +142,6 @@ public class StatistiqueActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

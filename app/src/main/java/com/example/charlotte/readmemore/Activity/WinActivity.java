@@ -2,7 +2,6 @@ package com.example.charlotte.readmemore.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,15 +11,11 @@ import android.widget.TextView;
 import com.example.charlotte.readmemore.Livre;
 import com.example.charlotte.readmemore.R;
 import com.example.charlotte.readmemore.Utils;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Charlotte on 23/11/2016.
@@ -30,7 +25,7 @@ public class WinActivity extends AppCompatActivity {
 
     private ImageView backHome;
     private int nb;
-    private List<Livre> userLivres;
+    private Map<String, Livre> userLivres;
     private TextView nbPage ;
     private static ValueEventListener userListener;
 
@@ -42,6 +37,7 @@ public class WinActivity extends AppCompatActivity {
         }
         userListener=valueEventListener;
         return userListener;
+
     }
 
 
@@ -70,12 +66,12 @@ public class WinActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userLivres=Utils.getUserLivres();
-                /*for ( Livre l : userLivres ) {
-                    if(l.getSatus().equal("finish"))
+                for ( Livre l : userLivres.values() ) {
+                    if(l.getReadingStatus().equals("Done"))
 
-                        nb += l.getNombrePages();
+                        nb += Integer.parseInt(l.getNbPages());
 
-                }*/
+                }
                 nbPage.setText(String.valueOf(nb) + " points");
             }
 

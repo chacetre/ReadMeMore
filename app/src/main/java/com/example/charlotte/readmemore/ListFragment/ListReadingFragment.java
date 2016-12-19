@@ -21,20 +21,19 @@ import java.util.List;
  * Created by Charlotte on 24/10/2016.
  */
 public class ListReadingFragment extends RecyclerViewFragment {
+    List<Livre> output = new ArrayList<>();
 
     @Override
     protected List<Livre> filterBook(List<Livre> input) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            input.removeIf(livre -> livre.getReadingStatus().equals("OnGoing"));
-        }
-        else{
-            for (Livre livre: input
-                    ) {
-                if(livre.getReadingStatus().equals("OnGoing")) {
-                    input.remove(livre);
-                }
+
+        output.clear();
+        for (Livre livre: input) {
+            if(livre.getReadingStatus().equals("OnGoing")) {
+                output.add(livre);
             }
         }
-        return super.filterBook(input);
+
+        return output;
+
     }
 }

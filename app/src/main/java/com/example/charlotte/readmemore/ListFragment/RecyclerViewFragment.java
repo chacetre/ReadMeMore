@@ -2,7 +2,6 @@ package com.example.charlotte.readmemore.ListFragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,13 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.charlotte.readmemore.Activity.ListGeneralActivity;
 import com.example.charlotte.readmemore.AdapterList;
 import com.example.charlotte.readmemore.Livre;
 import com.example.charlotte.readmemore.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by louis on 08/11/2016.
@@ -29,14 +28,16 @@ public class RecyclerViewFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Livre> bookList;
-    private List<Livre> hold;
+    private List<Livre> bookListBis;
+    private Map<String, Livre> hold;
     private boolean toUpdate = false;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         bookList = new ArrayList<>();
-        mAdapter = new AdapterList(bookList);
+        bookListBis = new ArrayList<>();
+        mAdapter = new AdapterList(bookListBis);
     }
 
     @Override
@@ -76,11 +77,13 @@ public class RecyclerViewFragment extends Fragment {
         return input;
     }
 
-    public void updateBookList(List<Livre> livres) {
+    public void updateBookList(Map<String, Livre> livres) {
         if (this.isVisible()) {
             bookList.clear();
-            //bookList.addAll(filterBook(livres));
-            bookList.addAll(livres);
+            bookListBis.clear();
+            //bookList.addAll(filterBook(livres.values()));
+            bookList.addAll(livres.values());
+            bookListBis.addAll(filterBook(bookList));
             Log.i("BookList", " has been updated");
 //            mAdapter.UpdateList(bookList);
             mAdapter.notifyDataSetChanged();

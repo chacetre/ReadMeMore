@@ -22,16 +22,15 @@ public class Livre {
     private String nbPagesLues;
     private String finDeLecture;
     private String readingStatus; // OnGoing, ToDo, Done
+    private String genre ;
 
-/*    public Livre(String title, String auteur) {
-        this.title = title;
-        this.auteur = auteur;
-    }*/
+
+
 
     public Livre() {
     }
 
-    public Livre(String title, String auteur, String date, String nbPages, String nbPagesLues, String finDeLecture, String readingStatus) {
+    public Livre(String title, String auteur, String date, String nbPages, String nbPagesLues, String finDeLecture, String readingStatus , String genre) {
         this.title = title;
         this.auteur = auteur;
         this.date = date;
@@ -39,6 +38,15 @@ public class Livre {
         this.nbPagesLues = nbPagesLues;
         this.finDeLecture = finDeLecture;
         this.readingStatus = readingStatus;
+        this.genre = genre;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getTitle() {

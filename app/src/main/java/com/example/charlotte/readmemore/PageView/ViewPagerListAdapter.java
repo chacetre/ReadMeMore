@@ -15,7 +15,7 @@ import com.example.charlotte.readmemore.ListFragment.RecyclerViewFragment;
 public class ViewPagerListAdapter extends FragmentPagerAdapter {
 
     private final List<RecyclerViewFragment> fragments;
-    private String tabTitles[] = new String[] {"A lire", "En lecture", "Déja lu" };
+    private String tabTitles[] = new String[] {"A lire", "En lecture", "Deja lu" };
 
     //On fournit à l'adapter la liste des fragments à afficher
     public ViewPagerListAdapter(FragmentManager fm, List fragments) {

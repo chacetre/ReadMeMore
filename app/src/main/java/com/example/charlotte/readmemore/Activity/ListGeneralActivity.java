@@ -1,7 +1,7 @@
 package com.example.charlotte.readmemore.Activity;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import android.app.Dialog;
@@ -42,13 +42,12 @@ public class ListGeneralActivity extends FragmentActivity {
     private static ValueEventListener userListener;
     private ValueEventListener globalListener;
 
-    private PagerAdapter mPagerAdapter;
     private List<RecyclerViewFragment> fragments;
 
     private ImageView backHome;
     private ImageView addBook;
 
-    private List<Livre> bookList;
+    private Map<String, Livre> bookList;
     public static ViewPager viewPager;
 
     private ValueEventListener setUserListener(ValueEventListener valueEventListener) {
@@ -69,9 +68,6 @@ public class ListGeneralActivity extends FragmentActivity {
         return globalListener;
     }
 
-    public static ViewPager getViewPager() {
-        return viewPager;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,18 +100,12 @@ public class ListGeneralActivity extends FragmentActivity {
                 final EditText nbPages = (EditText) dialog.findViewById(R.id.ET_pages);
                 final EditText date = (EditText) dialog.findViewById(R.id.ET_date);
                 final TextView text = (TextView) dialog.findViewById(R.id.ET_text_information);
+                final TextView textPage = (TextView) dialog.findViewById(R.id.txt_page);
+                final TextView textDate = (TextView) dialog.findViewById(R.id.txt_date);
 
                 final Button dialogButtonAdd = (Button) dialog.findViewById(R.id.dialogButtonAdd);
 
-
-
                 /* On recupere data des EDIT TEXT */
-
-                String titreS = titre.getText().toString();
-                String auteurS = auteur.getText().toString();
-                String nbPagesS = nbPages.getText().toString();
-                String dateS = date.getText().toString();
-
 
                 final Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonRecherche);
                 // if button is clicked, close the custom dialog
@@ -123,19 +113,14 @@ public class ListGeneralActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
 
-                        String titreS = titre.getText().toString();
-                        String auteurS = auteur.getText().toString();
-                        // TODO : Faire une recherche dans la dataBase avec auteurS et titre S
-                        // si on trouve alors on ferme et on ajoute dans la liste de lecture
-
-                        //Sinon on demande d'ajouter dans la DB
-
-                        text.setText("Nous n'avons pas trouver de livre dans notre bibilotèque veuillez renseigner les champs suivants :");
+                        text.setText("Nous n'avons pas trouver de livre dans notre bibiloteque veuillez renseigner les champs suivants :");
                         text.setTextColor(getResources().getColor(R.color.red));
                         date.setVisibility(View.VISIBLE);
                         nbPages.setVisibility(View.VISIBLE);
                         dialogButton.setVisibility(View.GONE);
                         dialogButtonAdd.setVisibility(View.VISIBLE);
+                        textDate.setVisibility(View.VISIBLE);
+                        textPage.setVisibility(View.VISIBLE);
 
                     }
                 });
@@ -145,12 +130,14 @@ public class ListGeneralActivity extends FragmentActivity {
                     public void onClick(View v) {
                         String dateS = date.getText().toString();
                         String nbPageS = nbPages.getText().toString();
-                        Livre l = new Livre("George et la grenouille","moi","20-12-2016","500","250", "20-12-2016", "ToDo");
+                        String titreS = titre.getText().toString();
+                        String auteurS = auteur.getText().toString();
+
+                        Livre l = new Livre(titreS,auteurS,dateS,nbPageS,"250", "20-12-2016", "ToDo","Policier");
                         Utils.AddBookForUser(l);
                         dialog.dismiss();
                     }
                 });
-
                 dialog.show();
             }
 
@@ -191,7 +178,6 @@ public class ListGeneralActivity extends FragmentActivity {
         Utils.AddGlobalValueListener(setGlobalListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
             }
 
             @Override

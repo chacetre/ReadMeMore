@@ -49,6 +49,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawer;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private TextView infoLectureEnCours;
     private Button suggestionButton;
     private Button notificationButton;
+    private Map<String, Livre> userLivres;
+    private static ValueEventListener userListener;
     private int compteur = 0;
 
     // Pour la DB
@@ -79,6 +82,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         Utils.setUserDBListener();
 
+        btn_navigation_drawer = (ImageView) findViewById(R.id.btn_navigation_drawer);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        listButton = (Button) findViewById(R.id.listButton);
+        statistiqueButton = (Button) findViewById(R.id.statistiqueButton);
+        suggestionButton = (Button) findViewById(R.id.suggestionButton);
+        notificationButton = (Button) findViewById(R.id.notificationButton);
+        winButton = (Button) findViewById(R.id.winButton);
+        infoLectureEnCours = (TextView) findViewById(R.id.infoLectureEnCours);
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -90,15 +105,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        btn_navigation_drawer = (ImageView) findViewById(R.id.btn_navigation_drawer);
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        listButton = (Button) findViewById(R.id.listButton);
-        statistiqueButton = (Button) findViewById(R.id.statistiqueButton);
-        suggestionButton = (Button) findViewById(R.id.suggestionButton);
-        notificationButton = (Button) findViewById(R.id.notificationButton);
-        winButton = (Button) findViewById(R.id.winButton);
-        infoLectureEnCours = (TextView) findViewById(R.id.infoLectureEnCours);
+
 
         infoLectureEnCours.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,10 +167,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
