@@ -14,6 +14,7 @@ import java.util.Map;
 //public class Livre implements Parcelable {
 public class Livre {
 
+
     private static Comparator<Livre> livreComparator;
     private String title;
     private String auteur;
@@ -23,9 +24,6 @@ public class Livre {
     private String finDeLecture;
     private String readingStatus; // OnGoing, ToDo, Done
     private String genre ;
-
-
-
 
     public Livre() {
     }
@@ -41,58 +39,44 @@ public class Livre {
         this.genre = genre;
     }
 
-    public String getGenre() {
-        return genre;
+    public static Comparator<Livre> getLivreComparator() {
+        return livreComparator;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public static void setLivreComparator(Comparator<Livre> livreComparator) {
+        Livre.livreComparator = livreComparator;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String name) {
-        this.title = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    @SuppressWarnings("WeakerAccess")
     public String getAuteur() {
         return auteur;
     }
-    @SuppressWarnings("WeakerAccess")
+
     public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
-    @SuppressWarnings("WeakerAccess")
-    public void setDate(String date) {
-        this.date = date;
-    }
-    @SuppressWarnings("WeakerAccess")
+
     public String getDate() {
         return date;
     }
 
-    @Override
-    public int hashCode() {
-        return auteur.hashCode()+title.hashCode();
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getReadingStatus() {
-        return readingStatus;
+    public String getNbPages() {
+        return nbPages;
     }
 
-    public void setReadingStatus(String readingStatus) {
-        this.readingStatus = readingStatus;
-    }
-
-    public String getFinDeLecture() {
-        return finDeLecture;
-    }
-
-    public void setFinDeLecture(String finDeLecture) {
-        this.finDeLecture = finDeLecture;
+    public void setNbPages(String nbPages) {
+        this.nbPages = nbPages;
     }
 
     public String getNbPagesLues() {
@@ -103,12 +87,34 @@ public class Livre {
         this.nbPagesLues = nbPagesLues;
     }
 
-    public String getNbPages() {
-        return nbPages;
+    public String getFinDeLecture() {
+        return finDeLecture;
     }
 
-    public void setNbPages(String nbPages) {
-        this.nbPages = nbPages;
+    public void setFinDeLecture(String finDeLecture) {
+        this.finDeLecture = finDeLecture;
     }
+
+    public String getReadingStatus() {
+        return readingStatus;
+    }
+
+    public void setReadingStatus(String readingStatus) {
+        this.readingStatus = readingStatus;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    @Override
+    public int hashCode() {
+        return auteur.hashCode()+title.hashCode();
+    }
+
 
 }

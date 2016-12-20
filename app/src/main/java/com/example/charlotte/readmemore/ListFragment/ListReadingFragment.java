@@ -25,6 +25,7 @@ public class ListReadingFragment extends RecyclerViewFragment {
 
     @Override
     protected List<Livre> filterBook(List<Livre> input) {
+<<<<<<< HEAD
 
         output.clear();
         for (Livre livre: input) {
@@ -35,5 +36,19 @@ public class ListReadingFragment extends RecyclerViewFragment {
 
         return output;
 
+=======
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            input.removeIf(livre -> livre.getReadingStatus() != Livre.Status.OnGoing);
+        }
+        else{
+            for (Livre livre: input
+                    ) {
+                if(livre.getReadingStatus()!= Livre.Status.OnGoing) {
+                    input.remove(livre);
+                }
+            }
+        }
+        return super.filterBook(input);
+>>>>>>> 2623fa0b9edf4f215c497883e7e74a2f480f6917
     }
 }

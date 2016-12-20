@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:weightSum="1"
     android:background="@drawable/background">
 
@@ -35,6 +35,7 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,9 +80,6 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/minTXT"
             android:layout_centerInParent="true"/>
-
-
-
     </RelativeLayout>
 
 
@@ -91,8 +89,7 @@
         android:layout_height="wrap_content"
         android:text="Activer rappel"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"     
-
+        android:layout_marginTop="30dp"
         android:textColor="#F2F2F2"
         android:background="#000000"
         android:alpha="0.75"/>
@@ -103,14 +100,9 @@
         android:layout_height="wrap_content"
         android:text="desactiver rappel"
         android:layout_gravity="center_horizontal"
-
         android:textColor="#F2F2F2"
         android:background="#000000"
         android:alpha="0.75"
-
         android:layout_marginTop="16dp"/>
-
-
-
 
 </LinearLayout>

@@ -26,6 +26,7 @@ public class ListToReadFragment extends RecyclerViewFragment {
 
     @Override
     protected List<Livre> filterBook(List<Livre> input) {
+<<<<<<< HEAD
         output.clear();
         for (Livre livre: input) {
             if(livre.getReadingStatus().equals("Done")) {
@@ -35,6 +36,20 @@ public class ListToReadFragment extends RecyclerViewFragment {
 
         return output;
 
+=======
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            input.removeIf(livre -> livre.getReadingStatus() != Livre.Status.ToDo);
+        }
+        else{
+            for (Livre livre: input
+                 ) {
+                if(livre.getReadingStatus()!= Livre.Status.ToDo) {
+                    input.remove(livre);
+                }
+            }
+        }
+        return super.filterBook(input);
+>>>>>>> 2623fa0b9edf4f215c497883e7e74a2f480f6917
     }
     
 }

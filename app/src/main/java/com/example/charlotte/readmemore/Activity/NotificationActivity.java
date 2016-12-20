@@ -38,7 +38,9 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
     private String HeureAlarme = "00";
     private String minutes = "00";
     private String morning = "AM";
+
     private ImageView backHome;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,15 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
         spinnerHeure = (Spinner) findViewById(R.id.spinnerHeure);
         spinnerMin = (Spinner) findViewById(R.id.spinnerMinutes);
 
+
         spinnerHeure.setOnItemSelectedListener(this);
         spinnerMin.setOnItemSelectedListener(this);
 
+
+        spinnerHeure.setOnItemSelectedListener(this);
+        spinnerMin.setOnItemSelectedListener(this);
+
+        InitSpinner();
 
         InitSpinner();
 
@@ -60,6 +68,7 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
             @Override
             public void onClick(View view) {
                 startNotification();
+
             }
 
         });
@@ -71,7 +80,7 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
 
         });
 
-        backHome = (ImageView) findViewById(R.id.backHome) ;
+        backHome = (ImageView) findViewById(R.id.backHome);
 
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +90,16 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
             }
 
         });
+
+
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopNotification();
+            }
+
+        });
+
     }
 
     @Override
@@ -108,15 +127,16 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
 
         MyAlarmService.setHeureAlarme(HeureAlarme + ":" + minutes + ":00");
         MyAlarmService.setMorning(morning);
-        Toast.makeText(this,"Notification active",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Notification active", Toast.LENGTH_SHORT).show();
+
 
     }
 
     public void stopNotification() {
 
-        stopService(new Intent(this,MyAlarmService.class));
-        Toast.makeText(this,"Notification desactive",Toast.LENGTH_SHORT).show();
+        stopService(new Intent(this, MyAlarmService.class));
 
+        Toast.makeText(this, "Notification desactive", Toast.LENGTH_SHORT).show();
     }
 
     public void InitSpinner() {
@@ -125,6 +145,7 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
                 heures.add("0" + String.valueOf(i));
             else
                 heures.add(String.valueOf(i));
+
 
         for (int j = 0; j < 60; j++)
             if (j < 10)
@@ -145,9 +166,9 @@ public class NotificationActivity extends AppCompatActivity implements AdapterVi
 
     }
 
+
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
     }
-
 
 }

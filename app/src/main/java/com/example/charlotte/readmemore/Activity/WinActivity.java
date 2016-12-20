@@ -25,6 +25,7 @@ public class WinActivity extends AppCompatActivity {
 
     private ImageView backHome;
     private int nb;
+
     private Map<String, Livre> userLivres;
     private TextView nbPage ;
     private static ValueEventListener userListener;
@@ -38,9 +39,8 @@ public class WinActivity extends AppCompatActivity {
         userListener=valueEventListener;
         return userListener;
 
+
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class WinActivity extends AppCompatActivity {
         Utils.AddUserValueListener(setUserListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                userLivres=Utils.getUserLivres();
+
                 for ( Livre l : userLivres.values() ) {
                     if(l.getReadingStatus().equals("Done"))
 

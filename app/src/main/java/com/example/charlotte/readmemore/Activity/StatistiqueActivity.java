@@ -2,12 +2,14 @@ package com.example.charlotte.readmemore.Activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import com.androidplot.xy.CatmullRomInterpolator;
 import com.androidplot.xy.LineAndPointFormatter;
@@ -27,7 +29,9 @@ import java.text.Format;
 import java.text.ParsePosition;
 import java.util.Arrays;
 import java.util.List;
+
 import java.util.Map;
+
 
 /**
  * Created by Charlotte on 23/10/2016.
@@ -37,12 +41,14 @@ public class StatistiqueActivity extends AppCompatActivity {
     private ImageView backHome;
     private XYPlot plot;
 
+
     private Map<String, Livre> userLivres;
     private List<Livre> globalLivres;
     private static ValueEventListener userListener;
     private static ValueEventListener globalListener;
     Number[] series1Numbers  = {0,0,0,0,0,0,0,0,0,0,0,0};
     private TextView nombrePage ;
+
 
 
     private ValueEventListener setUserListener(ValueEventListener valueEventListener) {
@@ -63,6 +69,7 @@ public class StatistiqueActivity extends AppCompatActivity {
         backHome = (ImageView) findViewById(R.id.backHome) ;
         nombrePage = (TextView) findViewById(R.id.nombrePageLues) ;
 
+
         backHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,6 +83,7 @@ public class StatistiqueActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userLivres=Utils.getUserLivres();
+
                 int nombrePageLus = 0 ;
                 for ( Livre l : userLivres.values() ) {
                     if(l.getReadingStatus().equals("Done"))
@@ -108,6 +116,7 @@ public class StatistiqueActivity extends AppCompatActivity {
             }
         }));
 
+        initPlot();
 
     }
 
